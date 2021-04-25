@@ -6,8 +6,8 @@ import requests
 # K뱅크 값
 access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
 secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
-myToken = "xoxb-1730814337234-1743490164897-zBGSznvmdjXiBxRT90CB5HTM"
-
+myToken = "xoxb-1730814337234-1743490164897-vc3qmnPXM0kmyDnXGQSB7BH8"
+           
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
     response = requests.post("https://slack.com/api/chat.postMessage",
@@ -142,7 +142,7 @@ while True:
                             del buy_list[index]
                         index = index + 1                        
 
-        time.sleep(1)
+        time.sleep(2)
     except Exception as e:
         #print(e)
         #post_message(myToken,"#비트", e)
