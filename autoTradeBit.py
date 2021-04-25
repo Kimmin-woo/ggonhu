@@ -98,60 +98,50 @@ while True:
         end_time = start_time + datetime.timedelta(days=1)
         #print(now)
 
-        # 9시~다음날 8시59분
-        if start_time < now < end_time - datetime.timedelta(seconds=10):
-            
-            for code in symbol_list:
-                #print("code : ", code)
-                before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
-                current_price = get_current_price(code)
-                #print("현재가 : ", current_price)
-                #ma15 = get_ma15("KRW-BTC")
-                #if target_price < current_price and ma15 < current_price:
 
-                # 매수로직
-                if upbitYn == 'N':
-                    if before_target_price < current_price < after_target_price:
-                        print("매수시작 : ", code)
-                        krw = upbit.get_balance("KRW")
-                        print("krw : ", krw)
-                        buy_result = upbit.buy_market_order(code, krw-7000)
-                        post_message(myToken,"#비트", "매수완료, 종목 : " + code + ", 가격 : " + str(current_price))
-                        buy_list.append(code)
-                        upbitYn = 'Y'
+        for code in symbol_list:
+        #print("code : ", code)
+        before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
+        current_price = get_current_price(code)
+        #print("현재가 : ", current_price)
+        #ma15 = get_ma15("KRW-BTC")
+        #if target_price < current_price and ma15 < current_price:
 
-                # 매도로직
-                if any(code in volvo for volvo in buy_list):
+        # 매수로직
+        if upbitYn == 'N':
+        if before_target_price < current_price < after_target_price:
+            print("매수시작 : ", code)
+            krw = upbit.get_balance("KRW")
+            print("krw : ", krw)
+            buy_result = upbit.buy_market_order(code, krw-7000)
+            post_message(myToken,"#비트", "매수완료, 종목 : " + code + ", 가격 : " + str(current_price))
+            buy_list.append(code)
+            upbitYn = 'Y'
 
-                    sell_price2, sell_price8 = get_sell_price(code, start_price)
-                    # 시작가 <= 현재가 * 1.042 or 시작가 * 1.085 >= 현재가
-                    if current_price <= sell_price2 or current_price >= sell_price8:
+        # 매도로직
+        if any(code in volvo for volvo in buy_list):
 
-                        if current_price <= sell_price2:
-                            print("4% 매도시작")
-                            post_message(myToken,"#비트", "4% 매도")
+        sell_price2, sell_price8 = get_sell_price(code, start_price)
+        # 시작가 <= 현재가 * 1.042 or 시작가 * 1.085 >= 현재가
+        if current_price <= sell_price2 or current_price >= sell_price8:
 
-                        if current_price >= sell_price8:
-                            print("8% 매도시작")
-                            post_message(myToken,"#비트", "8% 매도")
+            if current_price <= sell_price2:
+                print("4% 매도시작")
+                post_message(myToken,"#비트", "4% 매도")
 
-                        sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
-                        post_message(myToken,"#비트", "매도완료, 종목 : " + code + ", 가격 : " + str(current_price))
-                        upbitYn = 'N'
+            if current_price >= sell_price8:
+                print("8% 매도시작")
+                post_message(myToken,"#비트", "8% 매도")
 
-                        index = 0
-                        for minwoo in buy_list:    
-                            if minwoo == code:
-                                del buy_list[index]
-                            index = index + 1                        
-                
-        else:
-            """
-            btc = get_balance(code)
-            if btc > 0.00008:
-                sell_result = upbit.sell_market_order(code, btc*0.9995)
-                post_message(myToken,"#비트", "BTC buy : " +str(sell_result))
-            """
+            sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
+            post_message(myToken,"#비트", "매도완료, 종목 : " + code + ", 가격 : " + str(current_price))
+            upbitYn = 'N'
+
+            index = 0
+            for minwoo in buy_list:    
+                if minwoo == code:
+                    del buy_list[index]
+                index = index + 1                        
 
         time.sleep(1)
     except Exception as e:
