@@ -6,7 +6,7 @@ import requests
 # K뱅크 값
 access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
 secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
-myToken = "xoxb-1730814337234-1743490164897-ZtrKMzs7KowOKXMYJjI9NllH"
+myToken = "xoxb-1730814337234-1743490164897-nEwdA3OS23huPBYMix7C7ivf"
            
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
