@@ -69,6 +69,7 @@ print("업비트 자동매매 시작합니다.")
 ###################################
 tickers = pyupbit.get_tickers()
 symbol_list = []
+bought_list = []
 buy_list = []
 for ticker in tickers:
     if 'KRW-' in ticker:
@@ -93,13 +94,21 @@ post_message(myToken,"#비트", "볼보-비트 자동매매 시작합니다.")
 upbitYn = 'N'
 while True:
     try:
-        now = datetime.datetime.now()
+        #now = datetime.datetime.now()
         start_time = get_start_time("KRW-DOGE")
         end_time = start_time + datetime.timedelta(days=1)
         #print(now)
 
         for code in symbol_list:
             #print("code : ", code)
+
+            if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=30):
+                bought_list = []
+
+            # 금일 매수한 종목은 매수하지 않습니다.
+            if code in bought_list: 
+                continue
+
             before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
             current_price = get_current_price(code)
             #print("현재가 : ", current_price)
@@ -115,6 +124,7 @@ while True:
                     buy_result = upbit.buy_market_order(code, krw-5000)
                     post_message(myToken,"#비트", "매수완료, 종목 : " + code + ", 가격 : " + str(current_price))
                     buy_list.append(code)
+                    bought_list.append(code)
                     upbitYn = 'Y'
 
             # 매도로직
@@ -142,7 +152,8 @@ while True:
                             del buy_list[index]
                         index = index + 1                        
 
-        time.sleep(2)
+        time.sleep(1)
+
     except Exception as e:
         #print(e)
         #post_message(myToken,"#비트", e)
