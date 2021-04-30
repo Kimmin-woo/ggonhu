@@ -80,7 +80,7 @@ for ticker in tickers:
             df = None
 
         if df is not None:
-            if 10 < df.iloc[0]['close'] < 100:
+            if 10 < df.iloc[0]['close'] < 500:
                 symbol_list.append(ticker)
 
 ###################################
@@ -102,7 +102,7 @@ while True:
         for code in symbol_list:
             #print("code : ", code)
 
-            if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=30):
+            if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=10):
                 bought_list = []
 
             before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
