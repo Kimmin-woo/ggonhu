@@ -31,10 +31,10 @@ def get_target_price(ticker, k):
 
 def get_sell_price(ticker, spay):
     """매도 목표가 조회"""
-    # 매도목표가 = 시작가 * 1.032
-    sell_price2 = spay * 1.032
-    # 매도목표가 = 시작가 * 1.085
-    sell_price8 = spay * 1.085
+    # 매도목표가 = 시작가 * 1.03
+    sell_price2 = spay * 1.03
+    # 매도목표가 = 시작가 * 1.1
+    sell_price8 = spay * 1.1
 
     return sell_price2, sell_price8
 
@@ -105,6 +105,10 @@ while True:
             # 오늘 9시 < 현재 < 내일 8시59분
             if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=10):
 
+                bought_list = []
+
+            else:
+
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
                 current_price = get_current_price(code)
                 #print("현재가 : ", current_price)
@@ -151,8 +155,6 @@ while True:
                         buy_list.append(code)
                         bought_list.append(code)
                         upbitYn = 'Y'
-            else:
-                bought_list = []
 
         time.sleep(1)
 
