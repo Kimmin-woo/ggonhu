@@ -6,7 +6,7 @@ import requests
 # K뱅크 값
 access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
 secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
-myToken = "xoxb-1730814337234-1985015754823-LoOvFnx4qbEP5Lpw4F89yjBT"
+myToken = "xoxb-1730814337234-1985015754823-NcI8z8hLITECZDkkXyw1Qq1H"
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -95,7 +95,7 @@ upbitYn = 'N'
 while True:
     try:
         #now = datetime.datetime.now()
-        start_time = get_start_time("KRW-DOGE")
+        start_time = get_start_time("KRW-BTC")
         end_time = start_time + datetime.timedelta(days=1)
         #print(now)
 
@@ -150,7 +150,7 @@ while True:
                         print("매수시작 : ", code)
                         krw = upbit.get_balance("KRW")
                         print("krw : ", krw)
-                        buy_result = upbit.buy_market_order(code, krw-5000)
+                        buy_result = upbit.buy_market_order(code, krw-3000)
                         post_message(myToken,"#비트", "매수완료, 종목 : " + code + ", 가격 : " + str(current_price))
                         buy_list.append(code)
                         bought_list.append(code)
