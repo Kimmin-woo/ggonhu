@@ -6,7 +6,7 @@ import requests
 # K뱅크 값
 access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
 secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
-myToken = "xoxb-1730814337234-1985015754823-1FrHrEfQBGYelgcoWpfxuV8V"
+myToken = "xoxb-1730814337234-1985015754823-u2Tqssiu0sQu0rgN5VPYLeB1"
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -86,7 +86,7 @@ for ticker in tickers:
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
-post_message(myToken,"#비트", "볼보-비트 자동매매 시작합니다.")
+post_message(myToken,"#volvobit", "볼보-비트 자동매매 시작합니다.")
 
 ###################################
 # 자동매매로직
@@ -124,14 +124,14 @@ while True:
 
                         if current_price <= sell_price2:
                             print("3% 매도시작")
-                            post_message(myToken,"#비트", "`3% 매도`")
+                            post_message(myToken,"#volvobit", "`3% 매도`")
 
                         if current_price >= sell_price8:
                             print("10% 매도시작")
-                            post_message(myToken,"#비트", "`10% 매도`")
+                            post_message(myToken,"#volvobit", "`10% 매도`")
 
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
-                        post_message(myToken,"#비트", "매도완료, 종목 : " + code + ", 가격 : " + str(current_price))
+                        post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 가격 : " + str(current_price))
                         upbitYn = 'N'
 
                         index = 0
@@ -151,7 +151,7 @@ while True:
                         krw = upbit.get_balance("KRW")
                         print("krw : ", krw)
                         buy_result = upbit.buy_market_order(code, krw-3000)
-                        post_message(myToken,"#비트", "매수완료, 종목 : " + code + ", 가격 : " + str(current_price))
+                        post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 가격 : " + str(current_price))
                         buy_list.append(code)
                         bought_list.append(code)
                         upbitYn = 'Y'                
