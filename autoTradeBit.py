@@ -6,7 +6,7 @@ import requests
 # K뱅크 값
 access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
 secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
-myToken = "xoxb-1730814337234-1985015754823-u8V6qt845ZaLnOZAfLuwLYO1"
+myToken = "xoxb-1730814337234-1985015754823-LoOvFnx4qbEP5Lpw4F89yjBT"
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -80,7 +80,7 @@ for ticker in tickers:
             df = None
 
         if df is not None:
-            if 10 < df.iloc[0]['close'] < 500:
+            if 100 < df.iloc[0]['close'] < 1000:
                 symbol_list.append(ticker)
 
 ###################################
@@ -102,12 +102,12 @@ while True:
         for code in symbol_list:
             #print("code : ", code)
 
+            #print("start_time : ", start_time)
+            #print("datetime.datetime.now() : ", datetime.datetime.now())
+            #print("end_time : ", end_time - datetime.timedelta(seconds=10))
+
             # 오늘 9시 < 현재 < 내일 8시59분
             if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=10):
-
-                bought_list = []
-
-            else:
 
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
                 current_price = get_current_price(code)
@@ -119,7 +119,7 @@ while True:
                 if any(code in volvo for volvo in buy_list):
 
                     sell_price2, sell_price8 = get_sell_price(code, start_price)
-                    # 시작가 <= 현재가 * 1.032 or 시작가 * 1.085 >= 현재가
+                    # 시작가 <= 현재가 * 1.03 or 시작가 * 1.1 >= 현재가
                     if current_price <= sell_price2 or current_price >= sell_price8:
 
                         if current_price <= sell_price2:
@@ -127,8 +127,8 @@ while True:
                             post_message(myToken,"#비트", "`3% 매도`")
 
                         if current_price >= sell_price8:
-                            print("8% 매도시작")
-                            post_message(myToken,"#비트", "`8% 매도`")
+                            print("10% 매도시작")
+                            post_message(myToken,"#비트", "`10% 매도`")
 
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
                         post_message(myToken,"#비트", "매도완료, 종목 : " + code + ", 가격 : " + str(current_price))
@@ -154,7 +154,11 @@ while True:
                         post_message(myToken,"#비트", "매수완료, 종목 : " + code + ", 가격 : " + str(current_price))
                         buy_list.append(code)
                         bought_list.append(code)
-                        upbitYn = 'Y'
+                        upbitYn = 'Y'                
+
+            else:
+
+                bought_list = []
 
         time.sleep(1)
 
