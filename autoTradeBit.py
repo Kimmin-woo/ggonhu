@@ -128,16 +128,16 @@ while True:
 
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
                         sell_krw = upbit.get_balance("KRW")
-                        post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(sell_krw))
+                        post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
                         total_krw = buy_krw-sell_krw
 
                         if current_price <= sell_price2:
                             print("-1% 매도시작")
-                            post_message(myToken,"#volvobit", "`-1% 매도, 손해 : " + str(total_krw) + "`")
+                            post_message(myToken,"#volvobit", "`-1% 매도, 손해 : " + str(round(total_krw,0)) + "`")
 
                         if current_price >= sell_price8:
                             print("3% 매도시작")
-                            post_message(myToken,"#volvobit", "`3% 매도, 이익 : " + str(total_krw) + "`")
+                            post_message(myToken,"#volvobit", "`3% 매도, 이익 : " + str(round(total_krw,0)) + "`")
 
                         upbitYn = 'N'
                         buy_list = []
@@ -154,7 +154,7 @@ while True:
                     if before_target_price < current_price < after_target_price:
                         print("매수시작 : ", code)
                         buy_krw = upbit.get_balance("KRW")
-                        post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(buy_krw))
+                        post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
                         buy_result = upbit.buy_market_order(code, buy_krw-2500)
                         buy_list.append(code)
                         bought_list.append(code)
