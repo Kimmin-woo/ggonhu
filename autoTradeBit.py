@@ -105,7 +105,6 @@ while True:
 
         for code in symbol_list:
             #print("code : ", code)
-
             #print("start_time : ", start_time)
             #print("datetime.datetime.now() : ", datetime.datetime.now())
             #print("end_time : ", end_time - datetime.timedelta(seconds=10))
