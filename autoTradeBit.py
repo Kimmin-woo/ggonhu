@@ -6,7 +6,7 @@ import requests
 # K뱅크 값
 access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
 secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
-myToken = "xoxb-1730814337234-1985015754823-XoNVFSxBJebAqJ4T1R7ogFbN"
+myToken = "xoxb-1730814337234-1985015754823-5Kt5iEcU3yOxw8UHsHAoc9hp"
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -127,19 +127,17 @@ while True:
                     if current_price <= sell_price2 or current_price >= sell_price8:
 
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
-                        
-                        time.sleep(10)
                         sell_krw = upbit.get_balance("KRW")
-                        post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
+                        post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_result+sell_krw,0)))
                         
                         if current_price <= sell_price2:
                             print("-1% 매도시작")
-                            total_krw = buy_krw-sell_krw
+                            total_krw = buy_krw-(sell_result+sell_krw)
                             post_message(myToken,"#volvobit", "`-1% 매도, 손해 : " + str(round(total_krw,0)) + "`")
 
                         if current_price >= sell_price8:
                             print("3% 매도시작")
-                            total_krw = sell_krw-buy_krw
+                            total_krw = (sell_result+sell_krw)-buy_krw
                             post_message(myToken,"#volvobit", "`3% 매도, 이익 : " + str(round(total_krw,0)) + "`")
 
                         upbitYn = 'N'
