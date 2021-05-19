@@ -20,10 +20,10 @@ def get_target_price(ticker, k):
 
     # 전날데이터를 가져옵니다.
     df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
-    # 매수목표가 = 시작가 * 1.009
-    before_target_price = df.iloc[0]['close'] * 1.009
-    # 매수목표가 = 시작가 * 1.012
-    after_target_price = df.iloc[0]['close'] * 1.012 
+    # 매수목표가 = 시작가 * 1.007
+    before_target_price = df.iloc[0]['close'] * 1.007
+    # 매수목표가 = 시작가 * 1.010
+    after_target_price = df.iloc[0]['close'] * 1.010
     # 종가(시작가)
     start_price = df.iloc[0]['close']
 
@@ -33,8 +33,8 @@ def get_sell_price(ticker, spay):
     """매도 목표가 조회"""
     # 매도목표가 = 시작가 * 0.99
     sell_price2 = spay * 0.99
-    # 매도목표가 = 시작가 * 1.03
-    sell_price8 = spay * 1.03
+    # 매도목표가 = 시작가 * 1.02
+    sell_price8 = spay * 1.02
 
     return sell_price2, sell_price8
 
@@ -84,7 +84,7 @@ for ticker in tickers:
             df = None
 
         if df is not None:
-            if 10 < df.iloc[0]['close'] < 10000:
+            if 700 < df.iloc[0]['close'] < 7000:
                 symbol_list.append(ticker)
 
 ###################################
@@ -123,7 +123,7 @@ while True:
 
                     sell_price2, sell_price8 = get_sell_price(code, start_price)
 
-                    # 시작가 <= 현재가 * 0.09 or 시작가 * 1.03 >= 현재가
+                    # 시작가 <= 현재가 * 0.09 or 시작가 * 1.02 >= 현재가
                     if current_price <= sell_price2 or current_price >= sell_price8:
 
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
@@ -140,9 +140,9 @@ while True:
                             post_message(myToken,"#volvobit", "`-1% 매도, 손해 : " + str(round(total_krw,0)) + "`")
 
                         if current_price >= sell_price8:
-                            print("3% 매도시작")
+                            print("1% 매도시작")
                             total_krw = sell_krw-buy_krw
-                            post_message(myToken,"#volvobit", "`3% 매도, 이익 : " + str(round(total_krw,0)) + "`")
+                            post_message(myToken,"#volvobit", "`1% 매도, 이익 : " + str(round(total_krw,0)) + "`")
 
                         upbitYn = 'N'
                         buy_list = []
@@ -160,7 +160,7 @@ while True:
                         print("매수시작 : ", code)
                         buy_krw = upbit.get_balance("KRW")
                         post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
-                        buy_result = upbit.buy_market_order(code, buy_krw-2500)
+                        buy_result = upbit.buy_market_order(code, buy_krw-2000)
                         buy_list.append(code)
                         bought_list.append(code)
                         upbitYn = 'Y'
@@ -172,5 +172,4 @@ while True:
 
     except Exception as e:
         #print(e)
-        #post_message(myToken,"#비트", e)
         time.sleep(1)
