@@ -192,11 +192,13 @@ while True:
                 if any(code in volvo for volvo in buy_list):
                     sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
 
+                    upbitYn = 'N'
+                    buy_list = []
                     buy_krw = 0
                     sell_krw = 0
                     total_krw = 0
-                    upbitYn = 'N'
-                    buy_list = []  
+                    profit_price = 0
+                    buy_price = 0
 
         time.sleep(1)
 
