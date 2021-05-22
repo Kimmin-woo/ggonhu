@@ -184,7 +184,7 @@ while True:
                         profit_price = current_price
                         buy_krw = upbit.get_balance("KRW")
                         post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
-                        buy_result = upbit.buy_market_order(code, buy_krw-2500)
+                        buy_result = upbit.buy_market_order(code, buy_krw-(buy_krw*0.1))
                         buy_list.append(code)
                         upbitYn = 'Y'
                    
