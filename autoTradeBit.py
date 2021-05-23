@@ -176,7 +176,8 @@ while True:
                             profit_price = current_price
                             #print("[담는중] 이익금액 : ", profit_price)                            
 
-                if any(code in volvobit for volvobit in today_list):
+                # 금일 매수한 종목은 매수하지 않습니다.
+                if code in today_list: 
                     continue
                 
                 # 매수로직
