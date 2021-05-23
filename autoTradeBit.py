@@ -70,6 +70,7 @@ print("업비트 자동매매 시작합니다.")
 tickers = pyupbit.get_tickers()
 symbol_list = []
 buy_list = []
+today_list = []
 sell_krw = 0
 buy_krw = 0
 total_krw = 0
@@ -175,6 +176,9 @@ while True:
                             profit_price = current_price
                             #print("[담는중] 이익금액 : ", profit_price)                            
 
+                if any(code in volvobit for volvobit in today_list):
+                    continue
+                
                 # 매수로직
                 if upbitYn == 'N':
                     if before_target_price < current_price < after_target_price:
@@ -186,9 +190,12 @@ while True:
                         post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
                         buy_result = upbit.buy_market_order(code, buy_krw-(buy_krw*0.1))
                         buy_list.append(code)
+                        today_list.append(code)
                         upbitYn = 'Y'
                    
             else:
+                today_list = []
+                
                 if any(code in volvo for volvo in buy_list):
                     sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
 
