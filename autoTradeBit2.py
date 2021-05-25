@@ -7,7 +7,7 @@ from fbprophet import Prophet
 # K뱅크 값
 access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
 secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
-myToken = "xoxb-1730814337234-1985015754823-o6zgknRzqsgVSAdQ032xUsT7"
+myToken = "xoxb-1730814337234-1985015754823-7IcGjW3e5x29m6wwJtCHby41"
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -99,6 +99,11 @@ buy_price = 0
 predicted_close_price = 0
 close_price = 0
 
+###################################
+# 시작 메세지 슬랙 전송
+###################################
+post_message(myToken,"#volvobit", "볼보-비트 자동매매 시작합니다.")
+
 for ticker in tickers:
     if 'KRW-' in ticker:
         try:
@@ -113,13 +118,12 @@ for ticker in tickers:
             if 10 < df.iloc[0]['close'] < 10000 and predicted_close_price > df.iloc[0]['close']:
                 symbol_list.append(ticker)
                 #print("가격 : ", predicted_close_price)
+                current_price = get_current_price(ticker)
+                post_message(myToken,"#volvobit", "`예측종목 : "+ ticker + "`")
+                post_message(myToken,"#volvobit", "현재가/예측가격 : " + str(current_price) + "/" + str(predicted_close_price))
 
-###################################
-# 시작 메세지 슬랙 전송
-###################################
-post_message(myToken,"#volvobit", "볼보-비트 자동매매 시작합니다.")
-post_message(myToken,"#volvobit", "대상종목 : "+ str(symbol_list))
 
+post_message(myToken,"#volvobit", "대상종목 : "+ str(len(symbol_list)) + "건")
 ###################################
 # 자동매매로직
 ###################################
@@ -200,8 +204,8 @@ while True:
 
                         else:
                             profit_price = current_price
-                            #print("[담는중] 이익금액 : ", profit_price)
-                
+                            #print("[담는중] 이익금액 : ", profit_price)                            
+
                 # 매수로직
                 if upbitYn == 'N':
                     if before_target_price < current_price < after_target_price:
@@ -234,6 +238,12 @@ while True:
         if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
             close_price = 0
         else:
+            for volvo in symbol_list:
+                current_price = get_current_price(volvo)
+                post_message(myToken,"#volvobit", "종료합니다.")
+                post_message(myToken,"#volvobit", "`종료예측종목 : "+ volvo + "`")
+                post_message(myToken,"#volvobit", "현재가(종가) : " + str(current_price))
+
             post_message(myToken,"#volvobit", "대상종목 재추출시작합니다.")
             symbol_list = []
 
