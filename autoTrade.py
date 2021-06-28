@@ -5,13 +5,13 @@ from datetime import datetime
 from slacker import Slacker
 import time, calendar
 
-slack = Slacker('xoxb-1730814337234-1743490164897-oE7ea6vwwftsSM4IlhOBXPcj')
+slack = Slacker('xoxb-1730814337234-1743490164897-ItGPvMZIqj94xFZwJaxJw0hn')
 
 def dbgout(message):
     """인자로 받은 문자열을 파이썬 셸과 슬랙으로 동시에 출력한다."""
     print(datetime.now().strftime('[%m/%d %H:%M:%S]'), message)
     strbuf = datetime.now().strftime('[%m/%d %H:%M:%S] ') + message
-    slack.chat.post_message('#볼보2', strbuf)
+    slack.chat.post_message('#볼보', strbuf)
 
 def printlog(message, *args):
     """인자로 받은 문자열을 파이썬 셸에 출력한다."""
@@ -333,7 +333,7 @@ def hyesu_etf(code, spay):
                     bought_list.append(code)
                     buy_list.append({'sym': code, 'spay': spay})
                     dbgout(str(stock_name) + "는 현재가(" + str(current_price) + "),매수목표가(" + str(round(before_target_price, 0)) +"~"+ str(round(after_target_price, 0))+ "),거래량(" + str(vol_value) + ")")
-                    dbgout("`[볼보2] "+ str(stock_name) + "(" + str(code) + ") -> " + str(bought_qty) + "건 매수완료!" + "`")
+                    dbgout("`[볼보] "+ str(stock_name) + "(" + str(code) + ") -> " + str(bought_qty) + "건 매수완료!" + "`")
 
     except Exception as ex:
         dbgout("`hyesu_etf("+ str(code) + ") -> exception! " + str(ex) + "`")
@@ -459,9 +459,9 @@ def chaeu_etf(code, spay):
         # 현재가 저가보다 높고(1~3%사이)
         if (low_price*1.01) < current_price < (low_price*1.03):
             
-            close_price = ((spay/low_price)-1)*100
+            #close_price = ((spay/low_price)-1)*100
             # 저가가 시작가 2프로 떨어졌을 경우 and 고가 < 시작가
-            if close_price > 1.9 and high_price < spay and vol_value > 999999 :
+            if high_price < spay and vol_value > 999999 :
 
                 # printlog('매수함수시작')         
                 # 최유리 FOK 매수 주문 설정
@@ -507,7 +507,7 @@ def chaeu_etf(code, spay):
                     bought_list.append(code)
                     buy_list.append({'sym': code, 'spay': current_price})
                     dbgout(str(stock_name) + "는 현재가(" + str(current_price) + "),매수목표가(" + str(round(low_price*1.01, 0)) +"~"+ str(round(low_price*1.03, 0))+ "),거래량(" + str(vol_value) + ")")
-                    dbgout("`[볼보2] "+ str(stock_name) + "(" + str(code) + ") -> " + str(bought_qty) + "건 매수완료!" + "`")
+                    dbgout("`[볼보] "+ str(stock_name) + "(" + str(code) + ") -> " + str(bought_qty) + "건 매수완료!" + "`")
 
     except Exception as ex:
         dbgout("`hyesu_etf("+ str(code) + ") -> exception! " + str(ex) + "`")
@@ -547,7 +547,7 @@ def sell_code(code, val, ask_price):
                         printlog('주의: 연속 주문 제한, 대기시간:', remain_time/1000)
 
                     if hit == 0:
-                        dbgout("`[볼보2] "+ str(s['name']) + "(" + str(s['code']) + ") -> " + str(s['qty']) + "건 매도중.." + "`")
+                        dbgout("`[볼보] "+ str(s['name']) + "(" + str(s['code']) + ") -> " + str(s['qty']) + "건 매도중.." + "`")
                         hit = hit + 1
 
             time.sleep(1)
@@ -597,7 +597,7 @@ if __name__ == '__main__':
         #printlog(len(codeList))
         #printlog("거래소 종목코드 : ", codeList)
 
-        dbgout('`민우와혜수 [볼보2] 시작합니다.`')
+        dbgout('`민우와혜수 [볼보] 시작합니다.`')
         # 아래의 종목을 대상으로 매매시작합니다.
         # 제주은행     : A006220
         # 인터파크     : A035080
@@ -652,7 +652,7 @@ if __name__ == '__main__':
             # AM 09:00 ~ AM 09:05
             if t_9 < t_now < t_start and soldout == False:
 
-                dbgout('[볼보2] 전일 매도 못한 주식을 다 팝니다.')
+                dbgout('[볼보] 전일 매도 못한 주식을 다 팝니다.')
                 soldout = True
 
                 # sell_all : 내가 가진 종목의 주식을 다 판다.
@@ -670,18 +670,18 @@ if __name__ == '__main__':
 
                 # 다판다
                 if sell_all() == True:
-                    dbgout('`[볼보2] 일괄매도하였습니다.`')
-                    dbgout('`민우와혜수 [볼보2] 종료합니다.`')
+                    dbgout('`[볼보] 일괄매도하였습니다.`')
+                    dbgout('`민우와혜수 [볼보] 종료합니다.`')
                     sys.exit(0)
 
             if t_exit < t_now:  # PM 03:20 ~ :프로그램 종료
 
-                dbgout('`민우와혜수 [볼보2] 종료합니다.`')
+                dbgout('`민우와혜수 [볼보] 종료합니다.`')
                 sys.exit(0)
 
             if t_now < t_7:  # PM 07 이전:프로그램 종료
                   
-                dbgout('`민우와혜수 [볼보2] 종료합니다.`')
+                dbgout('`민우와혜수 [볼보] 종료합니다.`')
                 sys.exit(0)                
 
             time.sleep(3)
