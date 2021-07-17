@@ -20,10 +20,10 @@ def get_target_price(ticker, k):
 
     # 전날데이터를 가져옵니다.
     df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
-    # 매수목표가 = 시작가 * 1.007
-    before_target_price = df.iloc[0]['close'] * 1.007
-    # 매수목표가 = 시작가 * 1.011
-    after_target_price = df.iloc[0]['close'] * 1.011
+    # 매수목표가 = 시작가 * 1.03
+    before_target_price = df.iloc[0]['close'] * 1.03
+    # 매수목표가 = 시작가 * 1.04
+    after_target_price = df.iloc[0]['close'] * 1.04
     # 종가(시작가)
     start_price = df.iloc[0]['close']
 
@@ -32,9 +32,9 @@ def get_target_price(ticker, k):
 def get_sell_price(ticker, spay):
     """매도 목표가 조회"""
     # 매도목표가 = 시작가 * 0.99
-    sell_price2 = spay * 0.99
-    # 매도목표가 = 시작가 * 1.02
-    sell_price8 = spay * 1.02
+    sell_price2 = spay * 1
+    # 매도목표가 = 시작가 * 1.07
+    sell_price8 = spay * 1.07
 
     return sell_price2, sell_price8
 
@@ -68,7 +68,7 @@ print("업비트 자동매매 시작합니다.")
 # 대상종목 추출
 ###################################
 tickers = pyupbit.get_tickers()
-symbol_list = []
+symbol_list = ['KRW-MLK']
 buy_list = []
 today_list = []
 sell_krw = 0
@@ -76,7 +76,7 @@ buy_krw = 0
 total_krw = 0
 profit_price = 0
 buy_price = 0
-
+'''
 for ticker in tickers:
     if 'KRW-' in ticker:
         try:
@@ -88,7 +88,7 @@ for ticker in tickers:
         if df is not None:
             if 10 < df.iloc[0]['close'] < 10000:
                 symbol_list.append(ticker)
-
+'''
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
