@@ -198,7 +198,7 @@ while True:
                         upbitYn = 'Y'
                    
             else:
-                
+                    
                 today_list = []
                 
                 if any(code in volvo for volvo in buy_list):
