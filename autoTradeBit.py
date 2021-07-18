@@ -199,7 +199,7 @@ while True:
                         upbitYn = 'Y'
                    
             else:
-                if start_time < datetime.datetime.now() < d_time - datetime.timedelta(seconds=5):
+                if d_time - datetime.timedelta(seconds=5) < datetime.datetime.now() < start_time:
                     post_message(myToken,"#volvobit", "볼보-비트 자동매매 새롭게 하루 시작합니다.")
                     time.sleep(5)
 
