@@ -4,8 +4,8 @@ import datetime
 import requests
 
 # K뱅크 값
-access = "cHJjMwVsbxZjr98OVPA2smVsvAGjg7wpP5BIeQuC"
-secret = "AXh3HuuyfYsOZipUOjkZ0daZvnD0lZVSrX1cR7Sp"
+access = "AbcCsTmtpOFUPUz86ZNsP5F8w6VdjU8Z7UGFs81G"
+secret = "8aqhI3xUOFBkXelGWJPvhSd9lxFjhexE17tKSeIp"
 myToken = "xoxb-1730814337234-1985015754823-o6zgknRzqsgVSAdQ032xUsT7"
 
 def post_message(token, channel, text):
