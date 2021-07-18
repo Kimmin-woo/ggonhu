@@ -103,6 +103,7 @@ while True:
         #now = datetime.datetime.now()
         start_time = get_start_time("KRW-BTC")
         end_time = start_time + datetime.timedelta(hours=4)
+        d_time = start_time + datetime.timedelta(days=1)
         #end_time = start_time + datetime.timedelta(days=1)
         #print(now)
 
@@ -198,9 +199,12 @@ while True:
                         upbitYn = 'Y'
                    
             else:
-                    
+                if start_time < datetime.datetime.now() < d_time - datetime.timedelta(seconds=5):
+                    post_message(myToken,"#volvobit", "볼보-비트 자동매매 새롭게 하루 시작합니다.")
+                    time.sleep(5)
+
                 today_list = []
-                
+
                 if any(code in volvo for volvo in buy_list):
                     sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
 
