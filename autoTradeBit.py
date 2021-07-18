@@ -68,7 +68,7 @@ print("업비트 자동매매 시작합니다.")
 # 대상종목 추출
 ###################################
 tickers = pyupbit.get_tickers()
-symbol_list = ['KRW-MLK']
+symbol_list = ['KRW-MLK','KRW-HIVE','KRW-CHZ','KRW-AXS','KRW-STX','KRW-SAND','KRW-GAS','KRW-AQT','KRW-UPP','KRW-META','KRW-FLOW','KRW-XEM','KRW-BAT']
 buy_list = []
 today_list = []
 sell_krw = 0
@@ -76,7 +76,7 @@ buy_krw = 0
 total_krw = 0
 profit_price = 0
 buy_price = 0
-'''
+"""
 for ticker in tickers:
     if 'KRW-' in ticker:
         try:
@@ -88,7 +88,7 @@ for ticker in tickers:
         if df is not None:
             if 10 < df.iloc[0]['close'] < 10000:
                 symbol_list.append(ticker)
-'''
+"""
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
@@ -131,14 +131,14 @@ while True:
 
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
 
-                        time.sleep(10)
+                        #time.sleep(10)
                         sell_krw = upbit.get_balance("KRW")
 
                         #print("-1% 매도시작")
                         #print("sell_krw : ", sell_krw)
                         post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
                         total_krw = buy_krw-sell_krw
-                        post_message(myToken,"#volvobit", "`패배, 손해 : " + str(round(total_krw,0)) + "`")
+                        post_message(myToken,"#volvobit", "`, 손해 : " + str(round(total_krw,0)) + "`")
 
                         upbitYn = 'N'
                         buy_list = []
@@ -162,7 +162,7 @@ while True:
                             #print("sell_krw : ", sell_krw)
                             post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
                             total_krw = sell_krw-buy_krw
-                            post_message(myToken,"#volvobit", "`승리, 이익 : " + str(round(total_krw,0)) + "`")
+                            post_message(myToken,"#volvobit", "`겸손, 이익 : " + str(round(total_krw,0)) + "`")
 
                             upbitYn = 'N'
                             buy_list = []
