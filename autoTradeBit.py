@@ -20,10 +20,10 @@ def get_target_price(ticker, k):
 
     # 전날데이터를 가져옵니다.
     df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
-    # 매수목표가 = 시작가 * 1.03
-    before_target_price = df.iloc[0]['close'] * 1.03
-    # 매수목표가 = 시작가 * 1.04
-    after_target_price = df.iloc[0]['close'] * 1.04
+    # 매수목표가 = 시작가 * 1
+    before_target_price = df.iloc[0]['close'] * 1
+    # 매수목표가 = 시작가 * 1.2
+    after_target_price = df.iloc[0]['close'] * 1.2
     # 종가(시작가)
     start_price = df.iloc[0]['close']
 
@@ -32,7 +32,7 @@ def get_target_price(ticker, k):
 def get_sell_price(ticker, spay):
     """매도 목표가 조회"""
     # 매도목표가 = 시작가 * 0.99
-    sell_price2 = spay * 1
+    sell_price2 = spay * 0.98
     # 매도목표가 = 시작가 * 1.07
     sell_price8 = spay * 1.07
 
@@ -102,7 +102,8 @@ while True:
     try:
         #now = datetime.datetime.now()
         start_time = get_start_time("KRW-BTC")
-        end_time = start_time + datetime.timedelta(days=1)
+        end_time = start_time + datetime.timedelta(hours=4)
+        #end_time = start_time + datetime.timedelta(days=1)
         #print(now)
 
         for code in symbol_list:
@@ -112,7 +113,9 @@ while True:
             #print("end_time : ", end_time - datetime.timedelta(seconds=10))
 
             # 오늘 9시 < 현재 < 내일 8시59분
-            if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
+            #if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
+            # 오늘 9시 < 현재 < 12시까지
+            if start_time < datetime.datetime.now() < end_time:
 
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
                 current_price = get_current_price(code)
@@ -195,6 +198,7 @@ while True:
                         upbitYn = 'Y'
                    
             else:
+                
                 today_list = []
                 
                 if any(code in volvo for volvo in buy_list):
