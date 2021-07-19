@@ -26,12 +26,11 @@ post_message(myToken,"#lotto", "$일확천금$ 로또 자동번호 생성 시작
 ###################################
 # 자동번호 생성
 ###################################
-post_message(myToken,"#lotto", "$일확천금$ 로또 자동번호 생성 시작합니다.")
 post_message(myToken,"#lotto", "`미리 축하합니다.`")
-post_message(myToken,"#lotto", "은진b 당첨번호 : " + str(random.sample(range(1,46),7)))
-post_message(myToken,"#lotto", "상현b 당첨번호 : " + str(random.sample(range(1,46),7)))
-post_message(myToken,"#lotto", "민우 당첨번호 : " + str(random.sample(range(1,46),7)))
-post_message(myToken,"#lotto", "효길 당첨번호 : " + str(random.sample(range(1,46),7)))
+post_message(myToken,"#lotto", "라푼젤의 당첨번호 : " + str(random.sample(range(1,46),7)))
+post_message(myToken,"#lotto", "가가멜의 당첨번호 : " + str(random.sample(range(1,46),7)))
+post_message(myToken,"#lotto", "버즈의 당첨번호 : " + str(random.sample(range(1,46),7)))
+post_message(myToken,"#lotto", "쥬디의 당첨번호 : " + str(random.sample(range(1,46),7)))
 post_message(myToken,"#lotto", "`앞날은 꽃길만 걸으세요.`")
 sys.exit(0)
 
