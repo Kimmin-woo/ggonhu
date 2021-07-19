@@ -31,10 +31,10 @@ def get_target_price(ticker, k):
 
 def get_sell_price(ticker, spay):
     """매도 목표가 조회"""
-    # 매도목표가 = 시작가 * 0.99
-    sell_price2 = spay * 0.98
-    # 매도목표가 = 시작가 * 1.07
-    sell_price8 = spay * 1.07
+    # 매도목표가 = 시작가 * 0.8
+    sell_price2 = spay * 0.8
+    # 매도목표가 = 시작가 * 1.7
+    sell_price8 = spay * 1.7
 
     return sell_price2, sell_price8
 
@@ -199,9 +199,9 @@ while True:
                         upbitYn = 'Y'
                    
             else:
-                if d_time - datetime.timedelta(seconds=5) < datetime.datetime.now() < start_time:
+                if d_time - datetime.timedelta(seconds=30) < datetime.datetime.now() < start_time:
                     post_message(myToken,"#volvobit", "볼보-비트 자동매매 새롭게 하루 시작합니다.")
-                    time.sleep(5)
+                    time.sleep(30)
 
                 today_list = []
 
