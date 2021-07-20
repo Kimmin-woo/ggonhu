@@ -102,9 +102,9 @@ while True:
     try:
         #now = datetime.datetime.now()
         start_time = get_start_time("KRW-BTC")
-        end_time = start_time + datetime.timedelta(hours=4)
-        d_time = start_time + datetime.timedelta(days=1)
         #end_time = start_time + datetime.timedelta(days=1)
+        s_time = start_time - datetime.timedelta(hours=1)
+        d_time = start_time + datetime.timedelta(hours=4)
         #print(now)
 
         for code in symbol_list:
@@ -115,8 +115,8 @@ while True:
 
             # 오늘 9시 < 현재 < 내일 8시59분
             #if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
-            # 오늘 9시 < 현재 < 12시까지
-            if start_time < datetime.datetime.now() < end_time:
+            # 오늘 8시 < 현재 < 13시까지
+            if s_time < datetime.datetime.now() < d_time:
 
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
                 current_price = get_current_price(code)
@@ -199,9 +199,6 @@ while True:
                         upbitYn = 'Y'
                    
             else:
-                if d_time - datetime.timedelta(seconds=30) < datetime.datetime.now() < start_time:
-                    post_message(myToken,"#volvobit", "볼보-비트 자동매매 새롭게 하루 시작합니다.")
-                    time.sleep(30)
 
                 today_list = []
 
