@@ -130,7 +130,6 @@ while True:
             btc_close_price = ((btc_start_price/btc_price)-1)*100
         
         #time.sleep(1)
-
         
         for code in symbol_list:
             #print("code : ", code)
