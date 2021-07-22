@@ -131,104 +131,43 @@ while True:
         
         #time.sleep(1)
 
-        if btc_close_price > 0:
-            for code in symbol_list:
-                #print("code : ", code)
-                #print("start_time : ", start_time)
-                #print("datetime.datetime.now() : ", datetime.datetime.now())
-                #print("end_time : ", end_time - datetime.timedelta(seconds=10))
+        
+        for code in symbol_list:
+            #print("code : ", code)
+            #print("start_time : ", start_time)
+            #print("datetime.datetime.now() : ", datetime.datetime.now())
+            #print("end_time : ", end_time - datetime.timedelta(seconds=10))
 
-                # 오늘 9시 < 현재 < 내일 8시59분
-                #if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
-                # 오늘 8시 < 현재 < 13시까지
-                if s_time < datetime.datetime.now() < d_time:
+            # 오늘 9시 < 현재 < 내일 8시59분
+            #if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
+            # 오늘 8시 < 현재 < 13시까지
+            if s_time < datetime.datetime.now() < d_time:
 
-                    before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
-                    current_price = get_current_price(code)
-                    #print("현재가 : ", current_price)
-                    #ma15 = get_ma15("KRW-BTC")
-                    #if target_price < current_price and ma15 < current_price:
+                before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
+                current_price = get_current_price(code)
+                #print("현재가 : ", current_price)
+                #ma15 = get_ma15("KRW-BTC")
+                #if target_price < current_price and ma15 < current_price:
 
-                    # 매도로직
-                    if any(code in volvo for volvo in buy_list):
+                # 매도로직
+                if any(code in volvo for volvo in buy_list):
 
-                        sell_price2, sell_price8 = get_sell_price(code, start_price)
+                    sell_price2, sell_price8 = get_sell_price(code, start_price)
 
-                        # 1 : 매매가에서 1프로 하락했을 경우
-                        # 시작가 <= 현재가 * 0.09
-                        if current_price <= sell_price2:
+                    # 1 : 매매가에서 1프로 하락했을 경우
+                    # 시작가 <= 현재가 * 0.09
+                    if current_price <= sell_price2:
 
-                            sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
-
-                            #time.sleep(10)
-                            sell_krw = upbit.get_balance("KRW")
-
-                            #print("-1% 매도시작")
-                            #print("sell_krw : ", sell_krw)
-                            post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
-                            total_krw = buy_krw-sell_krw
-                            post_message(myToken,"#volvobit", "`노인정, 손해 : " + str(round(total_krw,0)) + "`")
-
-                            upbitYn = 'N'
-                            buy_list = []
-                            buy_krw = 0
-                            sell_krw = 0
-                            total_krw = 0
-                            profit_price = 0
-                            buy_price = 0
-
-                        if  sell_price8 <= current_price:
-
-                            # 현재가 < 이익금액
-                            if current_price < profit_price:
-
-                                sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
-
-                                time.sleep(10)
-                                sell_krw = upbit.get_balance("KRW")
-
-                                #print("승 매도시작")
-                                #print("sell_krw : ", sell_krw)
-                                post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
-                                total_krw = sell_krw-buy_krw
-                                post_message(myToken,"#volvobit", "`유야호, 이익 : " + str(round(total_krw,0)) + "`")
-
-                                upbitYn = 'N'
-                                buy_list = []
-                                buy_krw = 0
-                                sell_krw = 0
-                                total_krw = 0
-                                profit_price = 0
-                                buy_price = 0
-
-                            else:
-                                profit_price = current_price
-                                #print("[담는중] 이익금액 : ", profit_price)                            
-
-                    # 금일 매수한 종목은 매수하지 않습니다.
-                    #if code in today_list: 
-                    #    continue
-                    
-                    # 매수로직
-                    if upbitYn == 'N':
-                        if before_target_price < current_price < after_target_price:
-                            #print("매수시작 : ", code)
-                            #print("[첫시작] 매수금액 : ", current_price)
-                            buy_price = current_price
-                            profit_price = current_price
-                            buy_krw = upbit.get_balance("KRW")
-                            post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
-                            buy_result = upbit.buy_market_order(code, buy_krw-(buy_krw*0.1))
-                            buy_list.append(code)
-                            today_list.append(code)
-                            upbitYn = 'Y'
-                    
-                else:
-
-                    today_list = []
-
-                    if any(code in volvo for volvo in buy_list):
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
+
+                        #time.sleep(10)
+                        sell_krw = upbit.get_balance("KRW")
+
+                        #print("-1% 매도시작")
+                        #print("sell_krw : ", sell_krw)
+                        post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
+                        total_krw = buy_krw-sell_krw
+                        post_message(myToken,"#volvobit", "`노인정, 손해 : " + str(round(total_krw,0)) + "`")
 
                         upbitYn = 'N'
                         buy_list = []
@@ -238,7 +177,68 @@ while True:
                         profit_price = 0
                         buy_price = 0
 
-            time.sleep(1)
+                    if  sell_price8 <= current_price:
+
+                        # 현재가 < 이익금액
+                        if current_price < profit_price:
+
+                            sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
+
+                            time.sleep(10)
+                            sell_krw = upbit.get_balance("KRW")
+
+                            #print("승 매도시작")
+                            #print("sell_krw : ", sell_krw)
+                            post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
+                            total_krw = sell_krw-buy_krw
+                            post_message(myToken,"#volvobit", "`유야호, 이익 : " + str(round(total_krw,0)) + "`")
+
+                            upbitYn = 'N'
+                            buy_list = []
+                            buy_krw = 0
+                            sell_krw = 0
+                            total_krw = 0
+                            profit_price = 0
+                            buy_price = 0
+
+                        else:
+                            profit_price = current_price
+                            #print("[담는중] 이익금액 : ", profit_price)                            
+
+                # 금일 매수한 종목은 매수하지 않습니다.
+                #if code in today_list: 
+                #    continue
+
+                # 매수로직
+                if upbitYn == 'N' and btc_close_price > 0:
+                    if before_target_price < current_price < after_target_price:
+                        #print("매수시작 : ", code)
+                        #print("[첫시작] 매수금액 : ", current_price)
+                        buy_price = current_price
+                        profit_price = current_price
+                        buy_krw = upbit.get_balance("KRW")
+                        post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
+                        buy_result = upbit.buy_market_order(code, buy_krw-(buy_krw*0.1))
+                        buy_list.append(code)
+                        today_list.append(code)
+                        upbitYn = 'Y'
+
+            else:
+
+                today_list = []
+
+                if any(code in volvo for volvo in buy_list):
+                    sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
+
+                    upbitYn = 'N'
+                    buy_list = []
+                    buy_krw = 0
+                    sell_krw = 0
+                    total_krw = 0
+                    profit_price = 0
+                    buy_price = 0
+
+        time.sleep(1)
 
     except Exception as e:
         #print(e)
