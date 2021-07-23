@@ -124,11 +124,7 @@ while True:
         #print(now)
         
         btc_price = get_current_price("KRW-BTC")
-        if btc_start_price > btc_price:
-            btc_close_price = ((btc_price/btc_start_price)-1)*100
-        else:
-            btc_close_price = ((btc_start_price/btc_price)-1)*100
-        
+        btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100       
         #time.sleep(1)
         
         for code in symbol_list:
