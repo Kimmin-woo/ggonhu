@@ -162,15 +162,16 @@ while True:
                         #print("sell_krw : ", sell_krw)
                         post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
                         total_krw = buy_krw-sell_krw
+                        buy_price = buy_price - total_krw
                         post_message(myToken,"#volvobit", "`노인정, 손해 : " + str(round(total_krw,0)) + "`")
-
+                        post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
+                        
                         upbitYn = 'N'
                         buy_list = []
                         buy_krw = 0
                         sell_krw = 0
                         total_krw = 0
                         profit_price = 0
-                        buy_price = 0
 
                     if  sell_price8 <= current_price:
 
@@ -186,7 +187,9 @@ while True:
                             #print("sell_krw : ", sell_krw)
                             post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
                             total_krw = sell_krw-buy_krw
+                            buy_price = buy_price + total_krw
                             post_message(myToken,"#volvobit", "`유야호, 이익 : " + str(round(total_krw,0)) + "`")
+                            post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
 
                             upbitYn = 'N'
                             buy_list = []
@@ -194,7 +197,6 @@ while True:
                             sell_krw = 0
                             total_krw = 0
                             profit_price = 0
-                            buy_price = 0
 
                         else:
                             profit_price = current_price
@@ -205,11 +207,10 @@ while True:
                 #    continue
 
                 # 매수로직
-                if upbitYn == 'N' and btc_close_price > 0:
+                if upbitYn == 'N' and btc_close_price > 0 and buy_price < 30001:
                     if before_target_price < current_price < after_target_price:
                         #print("매수시작 : ", code)
                         #print("[첫시작] 매수금액 : ", current_price)
-                        buy_price = current_price
                         profit_price = current_price
                         buy_krw = upbit.get_balance("KRW")
                         post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
