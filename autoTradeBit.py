@@ -79,7 +79,7 @@ print("업비트 자동매매 시작합니다.")
 # 대상종목 추출
 ###################################
 tickers = pyupbit.get_tickers()
-symbol_list = ['KRW-FLOW','KRW-AXS','KRW-SAND','KRW-MLK','KRW-HIVE','KRW-STX','KRW-GAS','KRW-AQT','KRW-UPP','KRW-META']
+symbol_list = ['KRW-FLOW','KRW-AXS','KRW-SAND','KRW-MLK','KRW-HIVE','KRW-PLA','KRW-GAS','KRW-AQT','KRW-POWR','KRW-META']
 buy_list = []
 today_list = []
 sell_krw = 0
@@ -134,9 +134,9 @@ while True:
             #print("end_time : ", end_time - datetime.timedelta(seconds=10))
 
             # 오늘 9시 < 현재 < 내일 8시59분
-            #if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
+            if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
             # 오늘 8시 < 현재 < 13시까지
-            if s_time < datetime.datetime.now() < d_time:
+            #if s_time < datetime.datetime.now() < d_time:
 
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
                 current_price = get_current_price(code)
@@ -190,14 +190,17 @@ while True:
                             buy_price = buy_price + total_krw
                             post_message(myToken,"#volvobit", "`유야호, 이익 : " + str(round(total_krw,0)) + "`")
                             post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
-
+                            
                             upbitYn = 'N'
                             buy_list = []
                             buy_krw = 0
                             sell_krw = 0
                             total_krw = 0
-                            profit_price = 0
-
+                            profit_price = 0                            
+                            
+                            if buy_price > 30000:
+                                post_message(myToken,"#volvobit", "`목표달성!!! 내일 뵙겠습니다.`")
+                                
                         else:
                             profit_price = current_price
                             #print("[담는중] 이익금액 : ", profit_price)                            
@@ -207,7 +210,8 @@ while True:
                 #    continue
 
                 # 매수로직
-                if upbitYn == 'N' and btc_close_price > 0 and buy_price < 30001:
+                #if upbitYn == 'N' and btc_close_price > 0 and buy_price < 30001:
+                if upbitYn == 'N' and buy_price < 30001:
                     if before_target_price < current_price < after_target_price:
                         #print("매수시작 : ", code)
                         #print("[첫시작] 매수금액 : ", current_price)
@@ -218,21 +222,20 @@ while True:
                         buy_list.append(code)
                         today_list.append(code)
                         upbitYn = 'Y'
-
+                        
             else:
 
                 today_list = []
-
+                upbitYn = 'N'
+                buy_krw = 0
+                sell_krw = 0
+                total_krw = 0
+                profit_price = 0
+                buy_price = 0
+                
                 if any(code in volvo for volvo in buy_list):
                     sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
-
-                    upbitYn = 'N'
                     buy_list = []
-                    buy_krw = 0
-                    sell_krw = 0
-                    total_krw = 0
-                    profit_price = 0
-                    buy_price = 0
 
         time.sleep(1)
 
