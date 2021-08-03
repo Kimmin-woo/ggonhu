@@ -155,7 +155,7 @@ while True:
 
                         sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
 
-                        #time.sleep(10)
+                        time.sleep(5)
                         sell_krw = upbit.get_balance("KRW")
 
                         #print("-1% 매도시작")
