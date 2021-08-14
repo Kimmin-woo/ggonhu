@@ -233,6 +233,8 @@ while True:
                 profit_price = 0
                 buy_price = 0
                 
+                post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루도 잘 부탁드립니다.`")
+                    
                 if any(code in volvo for volvo in buy_list):
                     sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
                     buy_list = []
