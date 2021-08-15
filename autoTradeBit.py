@@ -235,7 +235,7 @@ while True:
                 profit_price = 0
                 buy_price = 0
                 
-                if startYn == 'Y'
+                if startYn == 'Y':
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
                     startYn = 'N'
                     
