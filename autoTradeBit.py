@@ -114,6 +114,7 @@ btc_start_price = get_btc_price("KRW-BTC", 0.5)
 # 자동매매로직
 ###################################
 upbitYn = 'N'
+startYn = 'Y'
 while True:
     try:
         #now = datetime.datetime.now()
@@ -138,6 +139,7 @@ while True:
             # 오늘 8시 < 현재 < 13시까지
             #if s_time < datetime.datetime.now() < d_time:
 
+                startYn = 'Y'
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
                 current_price = get_current_price(code)
                 #print("현재가 : ", current_price)
@@ -233,7 +235,9 @@ while True:
                 profit_price = 0
                 buy_price = 0
                 
-                post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루도 잘 부탁드립니다.`")
+                if startYn == 'Y'
+                    post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
+                    startYn = 'N'
                     
                 if any(code in volvo for volvo in buy_list):
                     sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
