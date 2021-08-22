@@ -73,7 +73,7 @@ def get_current_price(ticker):
 # 로그인
 ###################################
 upbit = pyupbit.Upbit(access, secret)
-print("업비트 자동매매 시작합니다.")
+print("볼보비트 자동매매 시작합니다.")
 
 ###################################
 # 대상종목 추출
@@ -226,6 +226,20 @@ while True:
                         upbitYn = 'Y'
                         
             else:
+                                    
+                if any(code in volvo for volvo in buy_list):
+                    sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
+                    buy_list = []
+
+                    sell_krw = upbit.get_balance("KRW")
+                    post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
+                    total_krw = buy_krw-sell_krw
+                    buy_price = buy_price - total_krw
+                    post_message(myToken,"#volvobit", "`총 어제수익 : " + str(round(buy_price,0)) + "`")
+
+                if startYn == 'Y':
+                    post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
+                    startYn = 'N'
 
                 today_list = []
                 upbitYn = 'N'
@@ -234,14 +248,6 @@ while True:
                 total_krw = 0
                 profit_price = 0
                 buy_price = 0
-                
-                if startYn == 'Y':
-                    post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
-                    startYn = 'N'
-                    
-                if any(code in volvo for volvo in buy_list):
-                    sell_result = upbit.sell_market_order(code, upbit.get_balance(code))
-                    buy_list = []
 
         time.sleep(1)
 
