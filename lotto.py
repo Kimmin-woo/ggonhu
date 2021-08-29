@@ -17,13 +17,13 @@ def post_message(token, channel, text):
 ###################################
 # 변수선언
 ###################################
-curr_date = datetime.today()
+curr_date = datetime.datetime.today()
 
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
-post_message(myToken,"#lotto", "$일확천금$ 로또 자동번호 생성 시작합니다.")
-post_message(myToken,"#lotto", "오늘은 "+ calendar.day_name[curr_date.weekday()] +"입니다.")
+post_message(myToken,"#lotto", "$일확천금$ 오늘은 "+ calendar.day_name[curr_date.weekday()] + "입니다.
+post_message(myToken,"#lotto", "로또 자동번호 생성 시작합니다.")
 
 ###################################
 # 자동번호 생성
