@@ -1,10 +1,14 @@
 import os, sys, ctypes
 import time
 import datetime
+import calendar
 import requests
 import random
 
 myToken = "xoxb-1730814337234-1743490164897-5GZq1QytqcBK6q1SqIUmlMj4"
+
+
+print()
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -16,12 +20,12 @@ def post_message(token, channel, text):
 ###################################
 # 변수선언
 ###################################
+curr_date = datetime.today()
 
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
-post_message(myToken,"#lotto", "$일확천금$ 로또 자동번호 생성 시작합니다.")
-
+post_message(myToken,"#lotto", "$일확천금$ 오늘은 "+ "'"+ calendar.day_name[curr_date.weekday()]+"'" +" 로또 자동번호 생성 시작합니다.")
 
 ###################################
 # 자동번호 생성
