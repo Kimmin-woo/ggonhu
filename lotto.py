@@ -7,9 +7,6 @@ import random
 
 myToken = "xoxb-1730814337234-1743490164897-5GZq1QytqcBK6q1SqIUmlMj4"
 
-
-print()
-
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
     response = requests.post("https://slack.com/api/chat.postMessage",
