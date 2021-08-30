@@ -235,7 +235,7 @@ while True:
                     post_message(myToken,"#volvobit", "매도완료, 종목 : " + code + ", 잔고 : " + str(round(sell_krw,0)))
                     total_krw = buy_krw-sell_krw
                     buy_price = buy_price - total_krw
-                    post_message(myToken,"#volvobit", "`총 어제수익 : " + str(round(buy_price,0)) + "`")
+                    post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
 
                 if startYn == 'Y':
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
