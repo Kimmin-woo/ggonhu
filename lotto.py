@@ -37,6 +37,10 @@ post_message(myToken,"#lotto", "찰스 당첨번호 :" + str(sorted(random.sampl
 post_message(myToken,"#lotto", "`앞날은 꽃길만 걸으세요.`")
 sys.exit(0)
 
+post_message(myToken,"#lotto", "우공이산 :" + str(sorted(random.sample(range(1,46),6))))
+post_message(myToken,"#lotto", "십벌지목 :" + str(sorted(random.sample(range(1,46),6))))
+
+
 """
 while True:
     try:
