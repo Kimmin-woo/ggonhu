@@ -229,7 +229,7 @@ while True:
                                     
                 if len(buy_code) > 0:
                     sell_result = upbit.sell_market_order(buy_code, upbit.get_balance(buy_code))
-                    buy_list = []
+                    buy_code = ''
 
                     sell_krw = upbit.get_balance("KRW")
                     post_message(myToken,"#volvobit", "매도완료, 종목 : " + buy_code + ", 잔고 : " + str(round(sell_krw,0)))
