@@ -146,7 +146,7 @@ while True:
                 #ma15 = get_ma15("KRW-BTC")
                 #if target_price < current_price and ma15 < current_price:
 
-                while buy_list < 1:
+                while len(buy_list) < 1:
                     
                     # 매도로직
                     if any(code in volvo for volvo in buy_list):
