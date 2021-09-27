@@ -82,7 +82,7 @@ tickers = pyupbit.get_tickers()
 symbol_list = ['KRW-FLOW','KRW-AXS','KRW-SAND','KRW-MLK','KRW-HIVE','KRW-PLA','KRW-GAS','KRW-AQT','KRW-POWR','KRW-META']
 today_list = []
 sell_krw = 0
-buy_krw = 0
+buy_krw = 400000
 total_krw = 0
 profit_price = 0
 buy_price = 0
@@ -170,7 +170,6 @@ while True:
 
                             upbitYn = 'N'
                             buy_code = ''
-                            buy_krw = 0
                             sell_krw = 0
                             total_krw = 0
                             profit_price = 0
@@ -195,12 +194,11 @@ while True:
 
                                 upbitYn = 'N'
                                 buy_code = ''
-                                buy_krw = 0
                                 sell_krw = 0
                                 total_krw = 0
                                 profit_price = 0                            
 
-                                if buy_price > 400000:
+                                if buy_price > (buy_krw*0.1):
                                     post_message(myToken,"#volvobit", "`목표달성!!! 내일 뵙겠습니다.`")
 
                             else:
@@ -214,7 +212,7 @@ while True:
 
                 # 매수로직
                 #if upbitYn == 'N' and btc_close_price > 0 and buy_price < 30001:
-                if upbitYn == 'N' and buy_price < 400001:
+                if upbitYn == 'N' and buy_price < (buy_krw*0.1):
                     if before_target_price < current_price < after_target_price:
                         #print("매수시작 : ", code)
                         #print("[첫시작] 매수금액 : ", current_price)
@@ -233,18 +231,25 @@ while True:
                     buy_code = ''
 
                     sell_krw = upbit.get_balance("KRW")
-                    post_message(myToken,"#volvobit", "매도완료, 종목 : " + buy_code + ", 잔고 : " + str(round(sell_krw,0)))
-                    total_krw = buy_krw-sell_krw
-                    buy_price = buy_price - total_krw
-                    post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
-
+                    post_message(myToken,"#volvobit", "정리매도, 종목 : " + buy_code + ", 잔고 : " + str(round(sell_krw,0)))
+                    
+                    if buy_krw > sell_krw:
+                        total_krw = buy_krw-sell_krw
+                        buy_price = buy_price - total_krw
+                        post_message(myToken,"#volvobit", "`노인정, 손해 : " + str(round(total_krw,0)) + "`")
+                        post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
+                    else:
+                        total_krw = sell_krw-buy_krw
+                        buy_price = buy_price + total_krw
+                        post_message(myToken,"#volvobit", "`유야호, 이익 : " + str(round(total_krw,0)) + "`")
+                        post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
+                        
                 if startYn == 'Y':
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
                     startYn = 'N'
 
                 today_list = []
                 upbitYn = 'N'
-                buy_krw = 0
                 sell_krw = 0
                 total_krw = 0
                 profit_price = 0
