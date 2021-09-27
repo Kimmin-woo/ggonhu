@@ -124,8 +124,8 @@ while True:
         d_time = start_time + datetime.timedelta(hours=4)
         #print(now)
         
-        btc_price = get_current_price("KRW-BTC")
-        btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100       
+        #btc_price = get_current_price("KRW-BTC")
+        #btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100       
         #time.sleep(1)
         
         for code in symbol_list:
