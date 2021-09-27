@@ -82,7 +82,7 @@ tickers = pyupbit.get_tickers()
 symbol_list = ['KRW-FLOW','KRW-AXS','KRW-SAND','KRW-MLK','KRW-HIVE','KRW-PLA','KRW-GAS','KRW-AQT','KRW-POWR','KRW-META']
 today_list = []
 sell_krw = 0
-buy_krw = 400000
+buy_krw = 4000000
 total_krw = 0
 profit_price = 0
 buy_price = 0
@@ -146,9 +146,30 @@ while True:
                 #ma15 = get_ma15("KRW-BTC")
                 #if target_price < current_price and ma15 < current_price:
 
-                if len(buy_code) > 0:
-                    while len(buy_code) < 1:
+                # 금일 매수한 종목은 매수하지 않습니다.
+                #if code in today_list: 
+                #    continue
 
+                # 매수로직
+                #if upbitYn == 'N' and btc_close_price > 0 and buy_price < 30001:
+                if upbitYn == 'N' and buy_price < (buy_krw*0.1):
+                    if before_target_price < current_price < after_target_price:
+                        #print("매수시작 : ", code)
+                        #print("[첫시작] 매수금액 : ", current_price)
+                        profit_price = current_price
+                        buy_krw = upbit.get_balance("KRW")
+                        post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
+                        buy_result = upbit.buy_market_order(code, buy_krw-(buy_krw*0.1))
+                        buy_code = code
+                        today_list.append(code)
+                        upbitYn = 'Y'
+                
+                # 매도로직
+                if len(buy_code) > 0:
+                    
+                    while len(buy_code) < 1:
+                        
+                        current_price = get_current_price(buy_code)
                         sell_price2, sell_price8 = get_sell_price(buy_code, start_price)
 
                         # 1 : 매매가에서 1프로 하락했을 경우
@@ -179,7 +200,7 @@ while True:
                             # 현재가 < 이익금액
                             if current_price < profit_price:
 
-                                sell_result = upbit.sell_market_order(code, upbit.get_balance(buy_code))
+                                sell_result = upbit.sell_market_order(buy_code, upbit.get_balance(buy_code))
 
                                 time.sleep(10)
                                 sell_krw = upbit.get_balance("KRW")
@@ -199,30 +220,13 @@ while True:
                                 profit_price = 0                            
 
                                 if buy_price > (buy_krw*0.1):
-                                    post_message(myToken,"#volvobit", "`목표달성!!! 내일 뵙겠습니다.`")
+                                    post_message(myToken,"#volvobit", "`목표달성!!! [축] 내일 뵙겠습니다.`")
 
                             else:
                                 profit_price = current_price
-                                #print("[담는중] 이익금액 : ", profit_price)                            
-
+                                #print("[담는중] 이익금액 : ", profit_price)
                                 
-                # 금일 매수한 종목은 매수하지 않습니다.
-                #if code in today_list: 
-                #    continue
-
-                # 매수로직
-                #if upbitYn == 'N' and btc_close_price > 0 and buy_price < 30001:
-                if upbitYn == 'N' and buy_price < (buy_krw*0.1):
-                    if before_target_price < current_price < after_target_price:
-                        #print("매수시작 : ", code)
-                        #print("[첫시작] 매수금액 : ", current_price)
-                        profit_price = current_price
-                        buy_krw = upbit.get_balance("KRW")
-                        post_message(myToken,"#volvobit", "매수완료, 종목 : " + code + ", 잔고 : " + str(round(buy_krw,0)))
-                        buy_result = upbit.buy_market_order(code, buy_krw-(buy_krw*0.1))
-                        buy_code = code
-                        today_list.append(code)
-                        upbitYn = 'Y'
+                        time.sleep(1)
                         
             else:
                                     
