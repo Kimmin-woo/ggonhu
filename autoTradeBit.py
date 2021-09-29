@@ -79,7 +79,7 @@ print("볼보비트 자동매매 시작합니다.")
 # 대상종목 추출
 ###################################
 tickers = pyupbit.get_tickers()
-symbol_list = ['KRW-FLOW','KRW-AXS','KRW-SAND','KRW-MLK','KRW-HIVE','KRW-PLA','KRW-GAS','KRW-AQT','KRW-POWR','KRW-META']
+symbol_list = ['KRW-AXS','KRW-PLA','KRW-ATOM','KRW-ELF','KRW-POLY','KRW-IOST','KRW-HUNT','KRW-OMG','KRW-AQT','KRW-HIVE']
 today_list = []
 sell_krw = 0
 buy_krw = 4000000
