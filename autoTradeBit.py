@@ -220,7 +220,7 @@ while True:
                                 profit_price = 0                            
 
                                 if buy_price > (buy_krw*0.1):
-                                    post_message(myToken,"#volvobit", "`목표달성!!! [축] 내일 뵙겠습니다.`")
+                                    post_message(myToken,"#volvobit", "`목표달성!!! $축$ 내일 뵙겠습니다.`")
 
                             else:
                                 profit_price = current_price
