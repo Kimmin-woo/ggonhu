@@ -165,9 +165,9 @@ while True:
                         upbitYn = 'Y'
                 
                 # 매도로직
-                if len(buy_code) > 0:
+                if upbitYn == 'Y':
                     
-                    while len(buy_code) < 1:
+                    while upbitYn == 'N':
                         
                         current_price = get_current_price(buy_code)
                         sell_price2, sell_price8 = get_sell_price(buy_code, start_price)
