@@ -167,7 +167,10 @@ while True:
                 # 매도로직
                 if upbitYn == 'Y':
                     
-                    while upbitYn == 'N':
+                    while True:
+                        
+                        if not start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
+                            break
                         
                         current_price = get_current_price(buy_code)
                         sell_price2, sell_price8 = get_sell_price(buy_code, start_price)
@@ -194,6 +197,7 @@ while True:
                             sell_krw = 0
                             total_krw = 0
                             profit_price = 0
+                            break
 
                         if sell_price8 <= current_price:
 
@@ -222,6 +226,7 @@ while True:
                                 if buy_price > (buy_krw*0.1):
                                     post_message(myToken,"#volvobit", "`목표달성!!! $축$ 내일 뵙겠습니다.`")
 
+                                break
                             else:
                                 profit_price = current_price
                                 #print("[담는중] 이익금액 : ", profit_price)
@@ -232,8 +237,7 @@ while True:
                                     
                 if len(buy_code) > 0:
                     sell_result = upbit.sell_market_order(buy_code, upbit.get_balance(buy_code))
-                    buy_code = ''
-
+       
                     sell_krw = upbit.get_balance("KRW")
                     post_message(myToken,"#volvobit", "정리매도, 종목 : " + buy_code + ", 잔고 : " + str(round(sell_krw,0)))
                     
@@ -258,6 +262,7 @@ while True:
                 total_krw = 0
                 profit_price = 0
                 buy_price = 0
+                buy_code = ''
 
         time.sleep(1)
 
