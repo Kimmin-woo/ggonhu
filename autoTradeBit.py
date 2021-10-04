@@ -254,6 +254,7 @@ while True:
                         
                 if startYn == 'Y':
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
+                    btc_start_price = get_btc_price("KRW-BTC", 0.5)
                     startYn = 'N'
 
                 today_list = []
