@@ -123,17 +123,19 @@ while True:
         s_time = start_time - datetime.timedelta(hours=1)
         d_time = start_time + datetime.timedelta(hours=4)
         #print(now)
-        
-        #btc_price = get_current_price("KRW-BTC")
-        #btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100       
-        #time.sleep(1)
-        
+                
         for code in symbol_list:
             #print("code : ", code)
             #print("start_time : ", start_time)
             #print("datetime.datetime.now() : ", datetime.datetime.now())
             #print("end_time : ", end_time - datetime.timedelta(seconds=10))
 
+            btc_price = get_current_price("KRW-BTC")
+            btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100
+            if btc_close_price < -2.5:
+                post_message(myToken,"#volvobit", "`브레이크발동!! 비트코인 : " + str(round(btc_close_price,2)) + "`")
+                upbitYn = 'X'
+            
             # 오늘 9시 < 현재 < 내일 8시59분
             if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
             # 오늘 8시 < 현재 < 13시까지
