@@ -79,7 +79,7 @@ print("볼보비트 자동매매 시작합니다.")
 # 대상종목 추출
 ###################################
 tickers = pyupbit.get_tickers()
-symbol_list = ['KRW-PLA','KRW-ELF','KRW-POLY','KRW-IOST','KRW-HUNT','KRW-OMG','KRW-AQT','KRW-HIVE','KRW-OMG','KRW-ATOM','KRW-AXS']
+symbol_list = ['KRW-PLA','KRW-QKC','KRW-HUM','KRW-IOST','KRW-HUNT','KRW-OMG','KRW-AQT','KRW-HIVE','KRW-OMG','KRW-ATOM','KRW-AXS']
 today_list = []
 sell_krw = 0
 buy_krw = 5000000
@@ -132,7 +132,7 @@ while True:
 
             btc_price = get_current_price("KRW-BTC")
             btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100
-            if btc_close_price < -2.4:
+            if upbitYn != 'X' and btc_close_price < -2.4:
                 post_message(myToken,"#volvobit", "`위험감지!! 브레이크발동!!`")
                 post_message(myToken,"#volvobit", "비트코인 : " + str(round(btc_close_price,2)) + ", 시세 : " + str(round(btc_price,2)))
                 upbitYn = 'X'
