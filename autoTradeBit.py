@@ -107,7 +107,7 @@ for ticker in tickers:
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
-post_message(myToken,"#volvobit", "볼보-비트 자동매매 시작합니다.")
+#post_message(myToken,"#volvobit", "볼보-비트 자동매매 시작합니다.")
 btc_start_price = get_btc_price("KRW-BTC", 0.5)
 
 ###################################
@@ -115,6 +115,7 @@ btc_start_price = get_btc_price("KRW-BTC", 0.5)
 ###################################
 upbitYn = 'N'
 startYn = 'Y'
+breakYn = 'N'
 while True:
     try:
         #now = datetime.datetime.now()
@@ -129,19 +130,19 @@ while True:
             #print("start_time : ", start_time)
             #print("datetime.datetime.now() : ", datetime.datetime.now())
             #print("end_time : ", end_time - datetime.timedelta(seconds=10))
-
-            btc_price = get_current_price("KRW-BTC")
-            btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100
-            if upbitYn != 'X' and btc_close_price < -2.4:
-                post_message(myToken,"#volvobit", "`위험감지!! 브레이크발동!! 오전9시 재기동합니다.`")
-                post_message(myToken,"#volvobit", "비트코인 : " + str(round(btc_close_price,2)) + ", 시세 : " + str(round(btc_price,2)))
-                upbitYn = 'X'
             
             # 오늘 9시 < 현재 < 내일 8시59분
             if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
             # 오늘 8시 < 현재 < 13시까지
             #if s_time < datetime.datetime.now() < d_time:
 
+                btc_price = get_current_price("KRW-BTC")
+                btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100
+                if breakYn == 'N' and btc_close_price < -2.4:
+                    post_message(myToken,"#volvobit", "`위험감지!! 브레이크발동!! 오전9시 재기동합니다.`")
+                    post_message(myToken,"#volvobit", "비트코인 : " + str(round(btc_close_price,2)) + ", 시세 : " + str(round(btc_price,2)))
+                    breakYn = 'Y'
+                
                 startYn = 'Y'
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
                 current_price = get_current_price(code)
@@ -264,6 +265,7 @@ while True:
 
                 today_list = []
                 upbitYn = 'N'
+                breakYn = 'N'
                 sell_krw = 0
                 total_krw = 0
                 profit_price = 0
