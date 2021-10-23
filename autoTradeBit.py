@@ -257,7 +257,7 @@ while True:
                         post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
                         
                 if startYn == 'Y':
-                    btc_start_price = get_btc_price("KRW-BTC", 0.5)
+                    btc_start_price = get_current_price("KRW-BTC")
                     post_message(myToken,"#volvobit", "전일자 종가, 비트코인 : " + str(round(btc_start_price,0)))
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
                     
