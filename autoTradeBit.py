@@ -162,7 +162,7 @@ while True:
 
                 # 매수로직
                 #if upbitYn == 'N' and btc_close_price > 0 and buy_price < 30001:
-                if upbitYn == 'N' and buy_price < (buy_krw*0.1):
+                if upbitYn == 'N' and buy_price < today_krw:
                     if before_target_price < current_price < after_target_price:
                         #print("매수시작 : ", code)
                         #print("[첫시작] 매수금액 : ", current_price)
