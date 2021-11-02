@@ -145,7 +145,7 @@ while True:
                     post_message(myToken,"#volvobit", "비트코인 : " + str(round(btc_close_price,2)) + ", 시세 : " + str(round(btc_price,2)))
                     breakYn = 'Y'
                 
-                if breakYn == 'N' and buy_krw > target_krw
+                if breakYn == 'N' and buy_krw > target_krw:
                     post_message(myToken,"#volvobit", "`20% 목표달성!!! $축$ 정산 후 내일 뵙겠습니다.`")
                     breakYn = 'Y'                
                 
