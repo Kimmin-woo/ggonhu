@@ -82,7 +82,9 @@ tickers = pyupbit.get_tickers()
 symbol_list = ['KRW-PLA','KRW-QKC','KRW-HUM','KRW-IOST','KRW-HUNT','KRW-OMG','KRW-AQT','KRW-HIVE','KRW-OMG','KRW-ATOM','KRW-AXS']
 today_list = []
 sell_krw = 0
-buy_krw = 5000000
+buy_krw = 0
+today_krw = 766185
+target_krw = 83999999
 total_krw = 0
 profit_price = 0
 buy_price = 0
@@ -142,6 +144,10 @@ while True:
                     post_message(myToken,"#volvobit", "`위험감지!! 브레이크발동!! 오전9시 재기동합니다.`")
                     post_message(myToken,"#volvobit", "비트코인 : " + str(round(btc_close_price,2)) + ", 시세 : " + str(round(btc_price,2)))
                     breakYn = 'Y'
+                
+                if breakYn == 'N' and buy_krw > target_krw
+                    post_message(myToken,"#volvobit", "`20% 목표달성!!! $축$ 정산 후 내일 뵙겠습니다.`")
+                    breakYn = 'Y'                
                 
                 startYn = 'Y'
                 before_target_price, after_target_price, start_price = get_target_price(code, 0.5)
@@ -227,7 +233,7 @@ while True:
                                 total_krw = 0
                                 profit_price = 0                            
 
-                                if buy_price > (buy_krw*0.1):
+                                if buy_price > today_krw:
                                     post_message(myToken,"#volvobit", "`목표달성!!! $축$ 내일 뵙겠습니다.`")
 
                                 break
@@ -257,6 +263,8 @@ while True:
                         post_message(myToken,"#volvobit", "`오늘 하루 현재수익 : " + str(round(buy_price,0)) + "`")
                         
                 if startYn == 'Y':
+                    total_krw = upbit.get_balance("KRW")
+                    today_krw = total_krw*0.1
                     btc_start_price = get_current_price("KRW-BTC")
                     post_message(myToken,"#volvobit", "전일자 종가, 비트코인 : " + str(round(btc_start_price,0)))
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
