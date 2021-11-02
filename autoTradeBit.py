@@ -234,6 +234,7 @@ while True:
                                 profit_price = 0                            
 
                                 if buy_price > today_krw:
+                                    breakYn = 'Y'
                                     post_message(myToken,"#volvobit", "`목표달성!!! $축$ 내일 뵙겠습니다.`")
 
                                 break
