@@ -31,8 +31,8 @@ def get_target_price(ticker, k):
 
     # 전날데이터를 가져옵니다.
     df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
-    # 매수목표가 = 시작가 * 1
-    before_target_price = df.iloc[0]['close'] * 1
+    # 매수목표가 = 시작가 * 1.005
+    before_target_price = df.iloc[0]['close'] * 1.005
     # 매수목표가 = 시작가 * 1.02
     after_target_price = df.iloc[0]['close'] * 1.02
     # 종가(시작가)
