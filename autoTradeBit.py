@@ -33,8 +33,8 @@ def get_target_price(ticker, k):
     df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
     # 매수목표가 = 시작가 * 1.009
     before_target_price = df.iloc[0]['close'] * 1.009
-    # 매수목표가 = 시작가 * 1.02
-    after_target_price = df.iloc[0]['close'] * 1.02
+    # 매수목표가 = 시작가 * 1.019
+    after_target_price = df.iloc[0]['close'] * 1.019
     # 종가(시작가)
     start_price = df.iloc[0]['close']
 
@@ -42,7 +42,7 @@ def get_target_price(ticker, k):
 
 def get_sell_price(ticker, spay):
     """매도 목표가 조회"""
-    # 매도목표가 = 시작가 * 0.8
+    # 매도목표가 = 시작가 * 0.975
     sell_price2 = spay * 0.975
     # 매도목표가 = 시작가 * 1.034
     sell_price8 = spay * 1.034
