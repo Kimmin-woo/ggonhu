@@ -43,7 +43,7 @@ def get_target_price(ticker, k):
 def get_sell_price(ticker, spay):
     """매도 목표가 조회"""
     # 매도목표가 = 시작가 * 0.975
-    sell_price2 = spay * 0.975
+    sell_price2 = spay * 0.98
     # 매도목표가 = 시작가 * 1.034
     sell_price8 = spay * 1.034
 
