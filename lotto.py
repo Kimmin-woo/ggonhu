@@ -22,7 +22,7 @@ curr_date = datetime.datetime.today()
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
-menu = '판교집', '사위식당', '공화춘', '현백푸드', '반포식스', '순대국밥', '이도씨'
+menu = '판교집', '무명식당', '현백푸드', '반포식스', '순대국밥', '일도씨', '회냉면'
 post_message(myToken,"#lotto", "$일확천금$ 오늘은 "+ calendar.day_name[curr_date.weekday()] + "입니다.")
 post_message(myToken,"#lotto", "추천 점심식당은 "+ str(random.choice(menu)) + "입니다.")
 post_message(myToken,"#lotto", "로또 자동번호 생성 시작합니다.")
