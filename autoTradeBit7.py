@@ -114,10 +114,10 @@ def get_code_list(tickers):
             if 10 < ticker_current_price < 10000 and predicted_close_price > ticker_current_price and close_price > 5:
                 symbol_list.append(ticker)
                 #print("가격 : ", predicted_close_price)
-                post_message(myToken,"#볼보", "`예측종목 : "+ ticker + ", 예상수익율 : " + str(round(close_price,1)) + "%`")
-                #post_message(myToken,"#볼보", "현재가/예측가격 : " + str(ticker_current_price) + "/" + str(round(predicted_close_price, 0)))
+                post_message(myToken,"#volvobit", "`예측종목 : "+ ticker + ", 예상수익율 : " + str(round(close_price,1)) + "%`")
+                #post_message(myToken,"#volvobit", "현재가/예측가격 : " + str(ticker_current_price) + "/" + str(round(predicted_close_price, 0)))
 
-    post_message(myToken,"#볼보", "대상종목 : "+ str(len(symbol_list)) + "건")
+    post_message(myToken,"#volvobit", "대상종목 : "+ str(len(symbol_list)) + "건")
     return symbol_list
 
 ###################################
