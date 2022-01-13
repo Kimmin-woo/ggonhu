@@ -85,18 +85,18 @@ def predict_price(ticker, val):
     #학습시작
     model = Prophet()
     model.fit(data)
-    #24시간 미래 예측
-    future = model.make_future_dataframe(periods=24, freq='H')
-    forecast = model.predict(future)
-
+    #미래 예측
     if val == '1':
-        closeDf = forecast[forecast['ds'] == forecast.iloc[-1]['ds'].replace(hour=9)]
-        if len(closeDf) == 0:
-            closeDf = forecast[forecast['ds'] == data.iloc[-1]['ds'].replace(hour=9)]
+        #24시간
+        future = model.make_future_dataframe(periods=24, freq='H')
     else:
-        closeDf = forecast[forecast['ds'] == forecast.iloc[-1]['ds'].replace(hour=1)]
-        if len(closeDf) == 0:
-            closeDf = forecast[forecast['ds'] == data.iloc[-1]['ds'].replace(hour=1)]
+        #1시간
+        future = model.make_future_dataframe(periods=1, freq='H')
+        
+    forecast = model.predict(future)
+    closeDf = forecast[forecast['ds'] == forecast.iloc[-1]['ds'].replace(hour=9)]
+    if len(closeDf) == 0:
+        closeDf = forecast[forecast['ds'] == data.iloc[-1]['ds'].replace(hour=9)]
 
     predicted_close_price = closeDf['yhat'].values[0]
     return predicted_close_price
