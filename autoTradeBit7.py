@@ -68,7 +68,7 @@ def get_balance(coin):
 
 def get_current_price(code):
     """현재가 조회"""
-    return pyupbit.get_orderbook(tickers=code)[0]["orderbook_units"][0]["ask_price"]
+    return pyupbit.get_current_price(code)
 
 def predict_price(ticker, val):
     """Prophet으로 당일 종가 가격 예측"""
@@ -101,14 +101,17 @@ def predict_price(ticker, val):
     predicted_close_price = closeDf['yhat'].values[0]
     return predicted_close_price
 
-def get_code_list(tickers):
+def get_code_list():
     """학습을 통한 예측종목 추출"""
     symbol_list = []
+    tickers = pyupbit.get_tickers(fiat="KRW")
     print('전체종목수 : ', len(tickers))
 
     for ticker in tickers:
         if 'KRW-' in ticker:
+            print('ticker : ', ticker)
             predicted_close_price = predict_price(ticker, "1")
+            print('predicted_close_price : ', predicted_close_price)
             ticker_current_price = get_current_price(ticker)
             close_price = ((predicted_close_price/ticker_current_price)-1)*100
             if 10 < ticker_current_price < 10000 and predicted_close_price > ticker_current_price and close_price > 5:
@@ -129,7 +132,7 @@ print("볼보비트 자동매매 시작합니다.")
 ###################################
 # 대상종목 추출
 ###################################
-tickers = pyupbit.get_tickers()
+tickers = pyupbit.get_tickers(fiat="KRW")
 #symbol_list = ['KRW-PLA','KRW-QKC','KRW-HUM','KRW-IOST','KRW-HUNT','KRW-OMG','KRW-AQT','KRW-HIVE','KRW-OMG','KRW-ATOM','KRW-AXS']
 today_list = []
 sell_krw = 0
@@ -158,7 +161,7 @@ for ticker in tickers:
             if 10 < df.iloc[0]['close'] < 10000:
                 symbol_list.append(ticker)
 """
-symbol_list = get_code_list(tickers)
+symbol_list = get_code_list()
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
@@ -325,7 +328,7 @@ while True:
                     btc_start_price = get_current_price("KRW-BTC")
                     post_message(myToken,"#volvobit", "전일자 종가, 비트코인 : " + str(round(btc_start_price,0)))
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
-                    symbol_list = get_code_list(tickers)
+                    symbol_list = get_code_list()
                     startYn = 'N'
 
                 today_list = []
