@@ -43,10 +43,10 @@ def get_target_price(code, k):
 
 def get_sell_price(spay):
     """매도 목표가 조회"""
-    # 매도목표가 = 시작가 * 0.975
+    # 매도목표가 = 시작가 * 0.98
     sell_price2 = spay * 0.98
-    # 매도목표가 = 시작가 * 1.034
-    sell_price8 = spay * 1.034
+    # 매도목표가 = 시작가 * 1.04
+    sell_price8 = spay * 1.04
 
     return sell_price2, sell_price8
 
@@ -149,20 +149,6 @@ btc_close_price = 0
 btc_start_price = 0
 buy_code = ''
 
-"""
-for ticker in tickers:
-    if 'KRW-' in ticker:
-        try:
-            df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
-            print(type(df.iloc[0]['close']))
-        except Exception as ex:
-            df = None
-
-        if df is not None:
-            if 10 < df.iloc[0]['close'] < 10000:
-                symbol_list.append(ticker)
-"""
-
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
@@ -238,7 +224,7 @@ while True:
                     
                     while True:
                         
-                        if not start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=60):
+                        if not start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
                             break
                         
                         current_price = get_current_price(buy_code)
