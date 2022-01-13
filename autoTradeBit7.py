@@ -17,21 +17,21 @@ def post_message(token, channel, text):
         data={"channel": channel,"text": text}
     )
 
-def get_btc_price(ticker, k):
+def get_btc_price(code, k):
     """민우 전략으로 매수 목표가 조회"""
 
     # 전날데이터를 가져옵니다.
-    df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
+    df = pyupbit.get_ohlcv(code, interval="day", count=2)
     # 종가(시작가)
     btc_start_price = df.iloc[0]['close']
 
     return btc_start_price
 
-def get_target_price(ticker, k):
+def get_target_price(code, k):
     """민우 전략으로 매수 목표가 조회"""
 
     # 전날데이터를 가져옵니다.
-    df = pyupbit.get_ohlcv(ticker, interval="day", count=2)
+    df = pyupbit.get_ohlcv(code, interval="day", count=2)
     # 매수목표가 = 시작가 * 1.009
     before_target_price = df.iloc[0]['close'] * 1.009
     # 매수목표가 = 시작가 * 1.019
@@ -41,7 +41,7 @@ def get_target_price(ticker, k):
 
     return before_target_price, after_target_price, start_price
 
-def get_sell_price(ticker, spay):
+def get_sell_price(spay):
     """매도 목표가 조회"""
     # 매도목표가 = 시작가 * 0.975
     sell_price2 = spay * 0.98
@@ -50,9 +50,9 @@ def get_sell_price(ticker, spay):
 
     return sell_price2, sell_price8
 
-def get_start_time(ticker):
+def get_start_time():
     """시작 시간 조회"""
-    df = pyupbit.get_ohlcv(ticker, interval="day", count=1)
+    df = pyupbit.get_ohlcv("KRW-BTC", interval="day", count=1)
     start_time = df.index[0]
     return start_time
 
@@ -66,9 +66,9 @@ def get_balance(coin):
             else:
                 return 0
 
-def get_current_price(ticker):
+def get_current_price(code):
     """현재가 조회"""
-    return pyupbit.get_orderbook(tickers=ticker)[0]["orderbook_units"][0]["ask_price"]
+    return pyupbit.get_orderbook(tickers=code)[0]["orderbook_units"][0]["ask_price"]
 
 def predict_price(ticker, val):
     """Prophet으로 당일 종가 가격 예측"""
@@ -174,7 +174,7 @@ breakYn = 'N'
 while True:
     try:
         #now = datetime.datetime.now()
-        start_time = get_start_time("KRW-BTC")
+        start_time = get_start_time()
         end_time = start_time + datetime.timedelta(days=1)
         s_time = start_time - datetime.timedelta(hours=1)
         d_time = start_time + datetime.timedelta(hours=4)
@@ -239,7 +239,7 @@ while True:
                             break
                         
                         current_price = get_current_price(buy_code)
-                        sell_price2, sell_price8 = get_sell_price(buy_code, start_price)
+                        sell_price2, sell_price8 = get_sell_price(start_price)
 
                         # 1 : 매매가에서 1프로 하락했을 경우
                         # 시작가 <= 현재가 * 0.09
