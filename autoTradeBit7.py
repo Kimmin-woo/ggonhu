@@ -128,11 +128,12 @@ def get_code_list():
 ###################################
 upbit = pyupbit.Upbit(access, secret)
 print("볼보비트 자동매매 시작합니다.")
-
+post_message(myToken,"#volvobit", "볼보-비트 자동매매 시작합니다.")
 ###################################
 # 대상종목 추출
 ###################################
-tickers = pyupbit.get_tickers(fiat="KRW")
+#tickers = pyupbit.get_tickers(fiat="KRW")
+symbol_list = get_code_list()
 #symbol_list = ['KRW-PLA','KRW-QKC','KRW-HUM','KRW-IOST','KRW-HUNT','KRW-OMG','KRW-AQT','KRW-HIVE','KRW-OMG','KRW-ATOM','KRW-AXS']
 today_list = []
 sell_krw = 0
@@ -161,11 +162,10 @@ for ticker in tickers:
             if 10 < df.iloc[0]['close'] < 10000:
                 symbol_list.append(ticker)
 """
-symbol_list = get_code_list()
+
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
-post_message(myToken,"#volvobit", "볼보-비트 자동매매 시작합니다.")
 btc_start_price = get_btc_price("KRW-BTC", 0.5)
 
 ###################################
