@@ -8,7 +8,7 @@ from fbprophet import Prophet
 # K뱅크 값
 access = "AbcCsTmtpOFUPUz86ZNsP5F8w6VdjU8Z7UGFs81G"
 secret = "8aqhI3xUOFBkXelGWJPvhSd9lxFjhexE17tKSeIp"
-myToken = "xoxb-1730814337234-1985015754823-o6zgknRzqsgVSAdQ032xUsT7"
+myToken = "xoxb-1730814337234-1985015754823-uI1neavK3MM3vPiB8cdFLjSF"
 
 def post_message(token, channel, text):
     """슬랙 메시지 전송"""
@@ -208,6 +208,7 @@ while True:
                     if before_target_price < current_price < after_target_price:
                         predicted_close_price = predict_price(code, "2")
                         code_close_price = ((predicted_close_price/current_price)-1)*100
+                        post_message(myToken,"#volvobit", "`대상종목 : "+ code + ", 예상수익율 : " + str(round(code_close_price,1)) + "%`")
                         if code_close_price > 5:
                             #print("매수시작 : ", code)
                             #print("[첫시작] 매수금액 : ", current_price)
