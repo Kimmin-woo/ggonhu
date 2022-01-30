@@ -165,8 +165,9 @@ while True:
         #now = datetime.datetime.now()
         start_time = get_start_time()
         end_time = start_time + datetime.timedelta(days=1)
-        s_time = start_time - datetime.timedelta(hours=1)
-        d_time = start_time + datetime.timedelta(hours=4)
+        s_time = start_time + datetime.timedelta(hours=1)
+        d_time = s_time + datetime.timedelta(hours=1)
+        e_time = d_time - datetime.timedelta(seconds=600)
         #print(now)
                 
         for code in symbol_list:
@@ -178,7 +179,7 @@ while True:
             # 오늘 9시 < 현재 < 내일 8시50분
             if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
             # 오늘 8시 < 현재 < 13시까지
-            #if s_time < datetime.datetime.now() < d_time:
+            #if s_time < datetime.datetime.now() < e_time:
 
                 btc_price = get_current_price("KRW-BTC")
                 btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100
@@ -226,6 +227,7 @@ while True:
                     while True:
                         
                         if not start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
+                        #if not s_time < datetime.datetime.now() < e_time:
                             break
                         
                         current_price = get_current_price(buy_code)
