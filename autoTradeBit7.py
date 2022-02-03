@@ -148,7 +148,11 @@ btc_price = 0
 btc_close_price = 0
 btc_start_price = 0
 buy_code = ''
-
+start_time = get_start_time()
+end_time = start_time + datetime.timedelta(days=1)
+s_time = start_time + datetime.timedelta(hours=1)
+d_time = s_time + datetime.timedelta(hours=1)
+e_time = d_time - datetime.timedelta(seconds=600)
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
@@ -163,11 +167,6 @@ breakYn = 'N'
 while True:
     try:
         #now = datetime.datetime.now()
-        start_time = get_start_time()
-        end_time = start_time + datetime.timedelta(days=1)
-        s_time = start_time + datetime.timedelta(hours=1)
-        d_time = s_time + datetime.timedelta(hours=1)
-        e_time = d_time - datetime.timedelta(seconds=600)
         #print(now)
                 
         for code in symbol_list:
@@ -177,9 +176,9 @@ while True:
             #print("end_time : ", end_time - datetime.timedelta(seconds=10))
             
             # 오늘 9시 < 현재 < 내일 8시50분
-            if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
+            #if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
             # 오늘 8시 < 현재 < 13시까지
-            #if s_time < datetime.datetime.now() < e_time:
+            if s_time < datetime.datetime.now() < e_time:
 
                 btc_price = get_current_price("KRW-BTC")
                 btc_close_price = ((btc_price-btc_start_price)/btc_start_price)*100
@@ -226,8 +225,8 @@ while True:
                     
                     while True:
                         
-                        if not start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
-                        #if not s_time < datetime.datetime.now() < e_time:
+                        #if not start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
+                        if not s_time < datetime.datetime.now() < e_time:
                             break
                         
                         current_price = get_current_price(buy_code)
@@ -318,6 +317,11 @@ while True:
                     post_message(myToken,"#volvobit", "전일자 종가, 비트코인 : " + str(round(btc_start_price,0)))
                     post_message(myToken,"#volvobit", "`아자아자!! 오늘 하루 파이팅!!!`")
                     symbol_list = get_code_list()
+                    start_time = get_start_time()
+                    end_time = start_time + datetime.timedelta(days=1)
+                    s_time = start_time + datetime.timedelta(hours=1)
+                    d_time = s_time + datetime.timedelta(hours=1)
+                    e_time = d_time - datetime.timedelta(seconds=600)                    
                     startYn = 'N'
 
                 today_list = []
