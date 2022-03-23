@@ -45,8 +45,8 @@ def get_sell_price(spay):
     """매도 목표가 조회"""
     # 매도목표가 = 시작가 * 0.98
     sell_price2 = spay * 0.98
-    # 매도목표가 = 시작가 * 1.04
-    sell_price8 = spay * 1.04
+    # 매도목표가 = 시작가 * 1.03
+    sell_price8 = spay * 1.03
 
     return sell_price2, sell_price8
 
@@ -139,8 +139,8 @@ today_list = []
 sell_krw = 0
 buy_krw = 0
 code_close_price = 0
-today_krw = 766185
-target_krw = 83999999
+today_krw = 100000
+target_krw = 1500000
 total_krw = 0
 profit_price = 0
 buy_price = 0
