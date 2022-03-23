@@ -256,7 +256,8 @@ while True:
                             profit_price = 0
                             break
 
-                        if sell_price8 <= current_price:
+                        #if sell_price8 <= current_price:
+                        if code_close_price <= current_price:    
 
                             # 현재가 < 이익금액
                             if current_price < profit_price:
