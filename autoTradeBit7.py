@@ -209,7 +209,7 @@ while True:
                         predicted_close_price = predict_price(code, "2")
                         code_close_price = ((predicted_close_price/current_price)-1)*100
                         post_message(myToken,"#volvobit", "`대상종목 : "+ code + ", 예상수익율 : " + str(round(code_close_price,1)) + "%`")
-                        if code_close_price > 5:
+                        if code_close_price > 3:
                             #print("매수시작 : ", code)
                             #print("[첫시작] 매수금액 : ", current_price)
                             profit_price = current_price
