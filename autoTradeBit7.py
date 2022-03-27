@@ -151,7 +151,7 @@ buy_code = ''
 start_time = get_start_time()
 end_time = start_time + datetime.timedelta(days=1)
 s_time = start_time + datetime.timedelta(hours=1)
-d_time = s_time + datetime.timedelta(hours=1)
+d_time = end_time + datetime.timedelta(hours=1)
 e_time = d_time - datetime.timedelta(seconds=600)
 post_message(myToken,"#volvobit", "start_time : " + str(start_time))
 post_message(myToken,"#volvobit", "end_time : " + str(end_time))
@@ -182,7 +182,7 @@ while True:
             
             # 오늘 9시 < 현재 < 내일 8시50분
             #if start_time < datetime.datetime.now() < end_time - datetime.timedelta(seconds=600):
-            # 오늘 8시 < 현재 < 13시까지
+            # 오늘 11시 < 현재 < 내일 10시50분까지
             if s_time < datetime.datetime.now() < e_time:
 
                 btc_price = get_current_price("KRW-BTC")
