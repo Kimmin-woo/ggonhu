@@ -153,11 +153,11 @@ end_time = start_time + datetime.timedelta(days=1)
 s_time = start_time + datetime.timedelta(hours=1)
 d_time = s_time + datetime.timedelta(hours=1)
 e_time = d_time - datetime.timedelta(seconds=600)
-post_message(myToken,"#volvobit", "start_time : " + start_time)
-post_message(myToken,"#volvobit", "end_time : " + end_time)
-post_message(myToken,"#volvobit", "stime : " + s_time)
-post_message(myToken,"#volvobit", "d_time : " + d_time)
-post_message(myToken,"#volvobit", "e_time : " + e_time)
+post_message(myToken,"#volvobit", "start_time : " + str(start_time))
+post_message(myToken,"#volvobit", "end_time : " + str(end_time))
+post_message(myToken,"#volvobit", "stime : " + str(s_time))
+post_message(myToken,"#volvobit", "d_time : " + str(d_time))
+post_message(myToken,"#volvobit", "e_time : " + str(e_time))
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
