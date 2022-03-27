@@ -6,8 +6,8 @@ import requests
 from fbprophet import Prophet
 
 # K뱅크 값
-access = "AbcCsTmtpOFUPUz86ZNsP5F8w6VdjU8Z7UGFs81G"
-secret = "8aqhI3xUOFBkXelGWJPvhSd9lxFjhexE17tKSeIp"
+access = "Ou92twTN6Ab6563AolTdzBb0xZLN3v3GKmUWXnpV"
+secret = "Z9gm35WbYZu0WeeF0uyaO0CWzaBqxgWgfh9KH60z"
 myToken = "xoxb-1730814337234-1985015754823-uI1neavK3MM3vPiB8cdFLjSF"
 
 def post_message(token, channel, text):
@@ -91,7 +91,7 @@ def predict_price(ticker, val):
         future = model.make_future_dataframe(periods=24, freq='H')
     else:
         #1시간
-        future = model.make_future_dataframe(periods=1, freq='H')
+        future = model.make_future_dataframe(periods=6, freq='H')
         
     forecast = model.predict(future)
     closeDf = forecast[forecast['ds'] == forecast.iloc[-1]['ds'].replace(hour=9)]
@@ -114,7 +114,7 @@ def get_code_list():
             print('predicted_close_price : ', predicted_close_price)
             ticker_current_price = get_current_price(ticker)
             close_price = ((predicted_close_price/ticker_current_price)-1)*100
-            if 10 < ticker_current_price < 10000 and predicted_close_price > ticker_current_price and close_price > 5:
+            if 10 < ticker_current_price < 10000 and predicted_close_price > ticker_current_price and close_price > 3:
                 symbol_list.append(ticker)
                 #print("가격 : ", predicted_close_price)
                 post_message(myToken,"#volvobit", "`예측종목 : "+ ticker + ", 예상수익율 : " + str(round(close_price,1)) + "%`")
@@ -153,6 +153,11 @@ end_time = start_time + datetime.timedelta(days=1)
 s_time = start_time + datetime.timedelta(hours=1)
 d_time = s_time + datetime.timedelta(hours=1)
 e_time = d_time - datetime.timedelta(seconds=600)
+post_message(myToken,"#volvobit", "start_time : " + start_time)
+post_message(myToken,"#volvobit", "end_time : " + end_time)
+post_message(myToken,"#volvobit", "stime : " + s_time)
+post_message(myToken,"#volvobit", "d_time : " + d_time)
+post_message(myToken,"#volvobit", "e_time : " + e_time)
 ###################################
 # 시작 메세지 슬랙 전송
 ###################################
@@ -209,7 +214,7 @@ while True:
                         predicted_close_price = predict_price(code, "2")
                         code_close_price = ((predicted_close_price/current_price)-1)*100
                         post_message(myToken,"#volvobit", "`대상종목 : "+ code + ", 예상수익율 : " + str(round(code_close_price,1)) + "%`")
-                        if code_close_price > 3:
+                        if code_close_price > 2.9:
                             #print("매수시작 : ", code)
                             #print("[첫시작] 매수금액 : ", current_price)
                             profit_price = current_price
@@ -256,8 +261,8 @@ while True:
                             profit_price = 0
                             break
 
-                        #if sell_price8 <= current_price:
-                        if code_close_price <= current_price:    
+                        if sell_price8 <= current_price:
+                        #if code_close_price <= current_price:    
 
                             # 현재가 < 이익금액
                             if current_price < profit_price:
