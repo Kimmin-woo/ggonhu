@@ -328,6 +328,11 @@ while True:
                     s_time = start_time + datetime.timedelta(hours=1)
                     d_time = s_time + datetime.timedelta(hours=1)
                     e_time = d_time - datetime.timedelta(seconds=600)                    
+                    post_message(myToken,"#volvobit", "start_time : " + start_time)
+                    post_message(myToken,"#volvobit", "end_time : " + end_time)
+                    post_message(myToken,"#volvobit", "stime : " + s_time)
+                    post_message(myToken,"#volvobit", "d_time : " + d_time)
+                    post_message(myToken,"#volvobit", "e_time : " + e_time)
                     startYn = 'N'
 
                 today_list = []
