@@ -91,7 +91,7 @@ def predict_price(ticker, val):
         future = model.make_future_dataframe(periods=24, freq='H')
     else:
         #1시간
-        future = model.make_future_dataframe(periods=6, freq='H')
+        future = model.make_future_dataframe(periods=3, freq='H')
         
     forecast = model.predict(future)
     closeDf = forecast[forecast['ds'] == forecast.iloc[-1]['ds'].replace(hour=9)]
@@ -328,11 +328,11 @@ while True:
                     s_time = start_time + datetime.timedelta(hours=1)
                     d_time = end_time + datetime.timedelta(hours=1)
                     e_time = d_time - datetime.timedelta(seconds=600)
-                    post_message(myToken,"#volvobit", "start_time : " + str(start_time))
-                    post_message(myToken,"#volvobit", "end_time : " + str(end_time))
-                    post_message(myToken,"#volvobit", "stime : " + str(s_time))
-                    post_message(myToken,"#volvobit", "d_time : " + str(d_time))
-                    post_message(myToken,"#volvobit", "e_time : " + str(e_time))
+                    #post_message(myToken,"#volvobit", "start_time : " + str(start_time))
+                    #post_message(myToken,"#volvobit", "end_time : " + str(end_time))
+                    #post_message(myToken,"#volvobit", "stime : " + str(s_time))
+                    #post_message(myToken,"#volvobit", "d_time : " + str(d_time))
+                    #post_message(myToken,"#volvobit", "e_time : " + str(e_time))
                     startYn = 'N'
 
                 today_list = []
